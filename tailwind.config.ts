@@ -15,16 +15,31 @@ export default {
         gray: {
           1: '#B9C1C2',
           2: '#DEE0E0',
-          3: '#F5F6F6'
+          3: '#F5F6F6',
+          50: "#fcfbfb",
+          100: "#f9f8f7",
+          200: "#f0efed",
+          300: "#e3e1df",
+          400: "#bdbab5",
+          500: "#9b9891",
+          600: "#7b7872",
+          700: "#5f5d58",
+          800: "#46443f",
+          900: "#312f2c",
+          950: "#21201e"
         },
         white: "#F9F9FA",
         blue: {
           1: '#167287',
           2: '#05BCB9'
         },
-        red: "#CE3434"
+        red: "#CE3434",
+        'custom-gradient': 'linear-gradient(90deg, #05BCB9 0%, #167287 100%)',
       },
-      'custom-gradient': 'linear-gradient(90deg, #05BCB9 0%, #167287 100%)',
+      backgroundColor: {
+        'custom-gradient': 'linear-gradient(90deg, #05BCB9 0%, #167287 100%)',
+
+      }
     },
   },
   plugins: [],
