@@ -5,11 +5,26 @@ import Button from '@/components/UI/button/button.component'
 import { ButtonDrop } from '@/components/UI/select/button-drop.component'
 import { IconComponent } from '@/components/UI/icon/icon.component'
 import Input from '@/components/UI/input/input.component'
+import { ModalContainer } from '@/components/UI/modal/modal.component'
 import { icons } from '@/components/UI/icon/icons'
+import { useState } from 'react'
 
 export default function Home() {
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const handleOpenModal = () => {
+    setModalOpen(true)
+  }
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <Button
+        variant="gradiant"
+        onClick={handleOpenModal}
+      >
+        Open Modal
+      </Button>
       <h1>TITLE</h1>
       <h2>Subtitle</h2>
       <h3 className="">Subtitle 2 SEMIBOLD</h3>
@@ -64,6 +79,7 @@ export default function Home() {
       <Button variant="gradiant" disabled>
         Button Disabled
       </Button>
+      <ModalContainer isOpen={modalOpen} onClose={handleCloseModal}>asd</ModalContainer>
     </div>
   )
 }
