@@ -1,5 +1,6 @@
 'use client'
 
+import { BalanceCard } from '@/components/balance-card/balance-card.component'
 import Button from '@/components/UI/button/button.component'
 import { ButtonDrop } from '@/components/UI/select/button-drop.component'
 import { IconComponent } from '@/components/UI/icon/icon.component'
@@ -9,6 +10,14 @@ import { icons } from '@/components/UI/icon/icons'
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className='w-[280px]'>
+
+      <BalanceCard
+        balanceAmount={10000000}
+        currencyIcon={icons.chile}
+        currencyLabel='Peso chileno'
+        />
+        </div>
       <ButtonDrop
         options={[
           {
