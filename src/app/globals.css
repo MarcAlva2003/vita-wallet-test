@@ -21,17 +21,23 @@ body {
 }
 
 h1 {
-  @apply text-5xl font-semibold
+  @apply text-5xl font-semibold;
 }
 h2 {
   line-height: 38px;
-  @apply text-[28px] font-semibold
+  @apply text-[28px] font-semibold;
 }
 h3 {
   line-height: 32px;
-  @apply text-2xl font-semibold
+  @apply text-2xl font-semibold;
 }
 
-h1,h2,h3,h4,h5,h6,p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   @apply text-black;
 }
