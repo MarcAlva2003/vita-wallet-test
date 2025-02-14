@@ -1,13 +1,17 @@
-import { IconComponent } from "../UI/icon/icon.component";
+import { IconComponent } from '../UI/icon/icon.component'
+import { useFormatText } from '@/hooks/useFormatText.hook'
 
 interface IBalanceCard {
-  currencyLabel: string,
-  currencyIcon: string,
+  currencyLabel: string
+  currencyIcon: string
   balanceAmount: number
 }
 
 export const BalanceCard: React.FC<IBalanceCard> = (props) => {
-  const {balanceAmount,currencyIcon,currencyLabel} = props;
+  const { balanceAmount, currencyIcon, currencyLabel } = props
+
+  const { formatBalanceNumber } = useFormatText()
+
   return (
     <div className="p-6 rounded-[6px] border border-solid border-gray-2 bg-gray-3 w-full">
       <div className="flex justify-between mb-[25px] items-center">
@@ -15,7 +19,7 @@ export const BalanceCard: React.FC<IBalanceCard> = (props) => {
         <IconComponent icon={currencyIcon} />
       </div>
       <div>
-        <p className="text-2xl font-semibold text-black">$ {balanceAmount}</p>
+        <p className="text-2xl font-semibold text-black">$ {formatBalanceNumber(balanceAmount)}</p>
       </div>
     </div>
   )
