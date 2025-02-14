@@ -22,9 +22,13 @@ export default {
           1: '#167287',
           2: '#05BCB9'
         },
-        red: "#CE3434"
+        red: "#CE3434",
+        'custom-gradient': 'linear-gradient(90deg, #05BCB9 0%, #167287 100%)',
       },
-      'custom-gradient': 'linear-gradient(90deg, #05BCB9 0%, #167287 100%)',
+      backgroundColor: {
+        'custom-gradient': 'linear-gradient(90deg, #05BCB9 0%, #167287 100%)',
+
+      }
     },
   },
   plugins: [],
