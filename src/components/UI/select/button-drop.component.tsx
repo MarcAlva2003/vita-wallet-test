@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { IconComponent } from '../icon/icon.component'
 import clsx from 'clsx'
 import { icons } from '../icon/icons'
+import { useOutsideClick } from '@/hooks/useOutsideClick.hook'
 
 interface IButtonDropOption {
   value: string
@@ -18,6 +19,8 @@ interface IButtonDrop {
 
 export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   const { options, value, onChange } = props
+  const btnDropContainer = useRef<HTMLDivElement>(null)
+
   const [selectedOption, setSelectedOption] = useState<IButtonDropOption>(
     !value
       ? options[0]
@@ -37,6 +40,12 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
       hidden: !isOpen
     }
   )
+
+  const onClickOutsideHandler = () => {
+    handleClose()
+  }
+
+  useOutsideClick(btnDropContainer, onClickOutsideHandler)
 
   const getValueOption = (): IButtonDropOption => {
     const val = options.filter((item) => item.value === value)
@@ -69,7 +78,7 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   console.log({ filteredOptions, selectedOption: selectedOption.value })
 
   return (
-    <div className="relative select-none">
+    <div className="relative select-none" ref={btnDropContainer}>
       <button className={selectBtnClsx} onClick={handleOpenChange}>
         <div>{selectedOption.label}</div>
         <div className={`ml-1 transition-all ${isOpen ? 'rotate-[-180deg]' : ''}`}>
