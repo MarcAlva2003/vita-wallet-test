@@ -16,18 +16,18 @@ const Button: React.FC<ButtonProps> = (props) => {
   const variantStyles: Record<IButtonVariant | 'disabled', string> = {
     gradiant: 'bg-gradient-to-r from-blue-2 to-blue-1 text-white',
     outlined:
-      'bg-gradient-to-r from-blue-2 to-blue-1 bg-white border border-solid border-gradient-to-r from-blue-2 to-blue-1 text-blue-1',
+      'bg-gradient-to-r from-blue-2 to-blue-1 bg-white text-blue-1',
     disabled: 'text-white bg-gray-2 border'
   }
 
   const sizeStyles: Record<IButtonSizes, string> = {
-    small: 'px-4 h-[46px]',
-    medium: 'px-4 h-[50px]',
-    large: 'px-6 h-[54px]'
+    small: 'px-4 h-[44px]',
+    medium: 'px-4 h-[58px]',
+    large: 'px-6 h-[52px]'
   }
 
   const btnContainerClsx = clsx(
-    `w-full ${sizeStyles[size ?? 'medium']} ${
+    `w-full ${sizeStyles[size ?? 'large']} ${
       variant === 'outlined' && !rest.disabled ? 'bg-white' : ''
     } rounded-[4px] text-base flex items-center`
   )
