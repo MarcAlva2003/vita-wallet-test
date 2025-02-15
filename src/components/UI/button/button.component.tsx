@@ -15,8 +15,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   const { children, variant, size, ...rest } = props
   const variantStyles: Record<IButtonVariant | 'disabled', string> = {
     gradiant: 'bg-gradient-to-r from-blue-2 to-blue-1 text-white',
-    outlined:
-      'bg-gradient-to-r from-blue-2 to-blue-1 bg-white text-blue-1',
+    outlined: 'bg-gradient-to-r from-blue-2 to-blue-1 bg-white text-blue-1',
     disabled: 'text-white bg-gray-2 border'
   }
 
@@ -27,12 +26,14 @@ const Button: React.FC<ButtonProps> = (props) => {
   }
 
   const btnContainerClsx = clsx(
-    `w-full ${sizeStyles[size ?? 'large']} ${
+    `w-full flex justify-center ${sizeStyles[size ?? 'large']} ${
       variant === 'outlined' && !rest.disabled ? 'bg-white' : ''
     } rounded-[4px] text-base flex items-center`
   )
 
-  const buttonClsx = clsx(`${variantStyles[rest.disabled ? 'disabled' : variant]} p-[1px] rounded-[6px] font-semibold`)
+  const buttonClsx = clsx(
+    `${variantStyles[rest.disabled ? 'disabled' : variant]} w-full p-[1px] rounded-[6px] font-semibold`
+  )
 
   return (
     <button className={buttonClsx} {...rest}>

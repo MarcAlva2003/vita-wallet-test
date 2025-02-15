@@ -2,9 +2,8 @@ import './modal.styles.css'
 
 import { useEffect, useState } from 'react'
 
-import { IconComponent } from '../icon/icon.component'
+import { XIcon } from '@/assets/icons/ui'
 import clsx from 'clsx'
-import { icons } from '../icon/icons'
 
 interface IModalContainer {
   children: React.ReactNode
@@ -36,7 +35,7 @@ export const ModalContainer: React.FC<IModalContainer> = (props) => {
       <div className={modalContainerClsx}>
         <div className="flex justify-end">
           <button className="p-1" onClick={onClose}>
-            <IconComponent icon={icons.x} />
+            <XIcon />
           </button>
         </div>
         {children}
