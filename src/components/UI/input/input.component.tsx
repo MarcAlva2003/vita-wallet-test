@@ -5,7 +5,7 @@ import clsx from 'clsx'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: boolean
-  labelBottom?: string
+  labelBottom?: string | React.ReactNode
   iconLeft?: React.ReactNode
   iconRight?: React.ReactNode
 }
