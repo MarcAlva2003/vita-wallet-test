@@ -50,7 +50,7 @@ export default function LoginPage() {
               pattern: { value: emailPattern, message: 'Please, enter a valid email' }
             })}
             error={!!errors.email}
-            labelBottom={errors.email?.message}
+            errorMessage={errors.email?.message}
             onChange={(ev) => {
               clearErrors('email')
               setEmailCheck(ev.target.value)
@@ -61,6 +61,21 @@ export default function LoginPage() {
               label="Contraseña"
               placeholder="Escribe tu contraseña"
               labelBottom={<Link href={'/'}>¿Olvidaste tu contaseña?</Link>}
+              {...register('password', {
+                required: {
+                  value: true,
+                  message: 'Password is required'
+                },
+                minLength: {
+                  value: 8,
+                  message: 'Password must be at least 8 characters long'
+                }
+              })}
+              error={!!errors.password}
+              errorMessage={errors.password?.message}
+              onChange={() => {
+                clearErrors('password')
+              }}
             />
           </div>
           <Button variant="gradiant" onClick={onSubmit}>
