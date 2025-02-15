@@ -3,6 +3,7 @@
 import Button from '@/components/UI/button/button.component'
 import { CheckIcon } from '@/assets/icons/ui'
 import Input from '@/components/UI/input/input.component'
+import Link from 'next/link'
 import { MoneyIncomeIcon } from '@/assets/icons'
 import { emailPattern } from '@/constants/regex-patterns.constant'
 import { useForm } from 'react-hook-form'
@@ -56,7 +57,11 @@ export default function LoginPage() {
             }}
           />
           <div className="mb-[80px]">
-            <Input label="Contraseña" placeholder="Escribe tu contraseña" labelBottom="¿Olvidaste tu contaseña?" />
+            <Input
+              label="Contraseña"
+              placeholder="Escribe tu contraseña"
+              labelBottom={<Link href={'/'}>¿Olvidaste tu contaseña?</Link>}
+            />
           </div>
           <Button variant="gradiant" onClick={onSubmit}>
             Iniciar sesion
