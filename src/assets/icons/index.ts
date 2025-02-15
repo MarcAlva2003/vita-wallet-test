@@ -1,0 +1,1 @@
+export {default as MoneyIncomeIcon} from './money-income.svg'

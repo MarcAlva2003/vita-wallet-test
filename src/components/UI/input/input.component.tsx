@@ -5,13 +5,14 @@ import clsx from 'clsx'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: boolean
-  labelBottom?: string
+  errorMessage?: string;
+  labelBottom?: string | React.ReactNode
   iconLeft?: React.ReactNode
   iconRight?: React.ReactNode
 }
 
 const Input: React.FC<InputProps> = (props) => {
-  const { label, error, iconLeft, iconRight, labelBottom, ...rest } = props
+  const { label, error, iconLeft, iconRight, labelBottom, errorMessage, ...rest } = props
 
   const inputClsx = clsx(
     'border text-black placeholder-gray-1 text-base rounded-[6px] h-[54px] w-full py-[14px] px-3 focus:outline-none focus:ring-2 focus:ring-blue-2',
@@ -42,7 +43,8 @@ const Input: React.FC<InputProps> = (props) => {
         )}
       </div>
       {/* INPUT BOTTOM */}
-      {labelBottom && <p className={`${error ? 'text-red' : 'text-black'} text-sm mt-1 text-sm text-end`}>{labelBottom}</p>}
+      {errorMessage && <p className={`text-red text-sm mt-1 text-sm text-end`}>{errorMessage}</p>}
+      {labelBottom && <p className={`text-black text-sm mt-1 text-sm text-end`}>{labelBottom}</p>}
     </div>
   )
 }

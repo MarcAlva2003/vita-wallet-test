@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { IconComponent } from '../icon/icon.component'
+import { ChevronDownIcon } from '@/assets/icons/ui'
 import clsx from 'clsx'
-import { icons } from '../icon/icons'
 import { useOutsideClick } from '@/hooks/useOutsideClick.hook'
 
 interface IButtonDropOption {
@@ -35,10 +34,7 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
     'focus:outline-none focus:ring-2 focus:ring-blue-2': isOpen
   })
   const selectOptoinClsx = clsx(
-    `rounded-[6px] border border-solid border-gray-1 absolute w-full top-[calc(100%+8px)] z-10 bg-white`,
-    {
-      hidden: !isOpen
-    }
+    `rounded-[6px] border border-solid border-gray-1 absolute w-full top-[calc(100%+8px)] z-10 bg-white`
   )
 
   const onClickOutsideHandler = () => {
@@ -82,28 +78,30 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
       <button className={selectBtnClsx} onClick={handleOpenChange}>
         <div>{selectedOption.label}</div>
         <div className={`ml-1 transition-all ${isOpen ? 'rotate-[-180deg]' : ''}`}>
-          <IconComponent icon={icons.chevronDown} />
+          <ChevronDownIcon />
         </div>
       </button>
-      <div className={selectOptoinClsx}>
-        <ul className="w-full">
-          {filteredOptions.map((item: IButtonDropOption) => (
-            <li
-              key={`option-${item.value}`}
-              className="w-full first:rounded-[6px_6px_0_0] last:rounded-[0_0_6px_6px] overflow-hidden"
-            >
-              <button
-                className="py-2 w-full flex justify-center hover:bg-gray-3 h-[44px] items-center"
-                onClick={() => {
-                  onOptionChange(item)
-                }}
+      {isOpen && (
+        <div className={selectOptoinClsx}>
+          <ul className="w-full">
+            {filteredOptions.map((item: IButtonDropOption) => (
+              <li
+                key={`option-${item.value}`}
+                className="w-full first:rounded-[6px_6px_0_0] last:rounded-[0_0_6px_6px] overflow-hidden"
               >
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+                <button
+                  className="py-2 w-full flex justify-center hover:bg-gray-3 h-[44px] items-center"
+                  onClick={() => {
+                    onOptionChange(item)
+                  }}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
