@@ -3,7 +3,7 @@ export const useFormatText = () => {
     return new Intl.NumberFormat('es-CL', {
       style: 'decimal',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      maximumFractionDigits: 10,
     }).format(number);
   }
   return {
