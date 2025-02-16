@@ -5,7 +5,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
   return (
     <div className="flex">
       <Sidebar navItems={navItems}/>
-      <div className="w-full p-[53px_70px]">
+      <div className="w-full p-[53px_120px_60px_70px]">
         {children}
       </div>
     </div>
