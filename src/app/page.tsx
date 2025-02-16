@@ -27,7 +27,7 @@ export default function Home() {
       <h3 className="">Subtitle 2 SEMIBOLD</h3>
       <h3 className="font-[400]">Subtitle 2</h3>
       <div className="w-[280px]">
-        <BalanceCard balanceAmount={10000000} currencyIcon={<ChileIcon />} currencyLabel="Peso chileno" />
+        <BalanceCard balance={10000000} currencyKey='clp' />
       </div>
       <ButtonDrop
         options={[
