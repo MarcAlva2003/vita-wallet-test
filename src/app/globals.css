@@ -29,7 +29,7 @@ h2 {
 }
 h3 {
   line-height: 32px;
-  @apply text-2xl font-semibold;
+  @apply text-2xl;
 }
 
 h1,
