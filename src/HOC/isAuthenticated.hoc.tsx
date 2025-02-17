@@ -15,9 +15,7 @@ export const AuthRequired = (WrappedComponent: NextComponentType) => {
     }
 
     useEffect(() => {
-      if (!getAccessToken()) {
-        console.log('HEREEE');
-        
+      if (!getAccessToken()) {        
         logout()
         push(APP_ROUTES.LOGIN)
       }

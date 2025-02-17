@@ -23,7 +23,7 @@ type Inputs = {
 export default function LoginPage() {
   const [emailCheck, setEmailCheck] = useState<string>('')
   const { push } = useRouter()
-  const { setToken } = useUserToken()
+  const { setToken, getAccessToken } = useUserToken()
   const [userMessage, setUserMessage] = useState<string>('')
   const { setUserData } = useUserDataContext()
   const {
@@ -59,6 +59,10 @@ export default function LoginPage() {
       setUserMessage('')
       mutate({ password: getValues('password'), email: getValues('email') })
     }
+  }
+
+  if (getAccessToken()) {
+    push(APP_ROUTES.HOME)
   }
 
   return (
