@@ -1,19 +1,17 @@
 'use client'
 
+import { AuthRequired } from '@/HOC/isAuthenticated.hoc'
 import { BalanceCard } from '@/components/balance-card/balance-card.component'
+import { IUserBalance } from '@/interfaces/user-data.interfaces'
 import { SimpleCoinIcon } from '@/assets/icons'
 import { useMemo } from 'react'
+import { useUserDataContext } from '@/context/user-data.context'
 
-export default function Home() {
-  const balances = {
-    usd: 8017079.39,
-    usdc: 1803418.31,
-    usdt: 103221.24,
-    btc: 1.574e-5
-  }
+function Home() {
+  const {data} = useUserDataContext()
 
   const formattedBals:  { currency: string; balance: number }[] = useMemo(() => {
-    return Object.entries(balances).map(([currency, balance]) => ({ currency, balance }));
+    return Object.entries(data.balances as IUserBalance).map(([currency, balance]) => ({ currency, balance }));
   }, [])
 
   return (
@@ -21,7 +19,7 @@ export default function Home() {
       <header className="flex items-center mb-[74px]">
         <SimpleCoinIcon className="mr-3" />
         <h2 className="">
-          ¡Hola <span className="bg-gradient-to-r from-blue-2 to-blue-1 bg-clip-text text-transparent">Marcos!</span>
+          ¡Hola <span className="bg-gradient-to-r from-blue-2 to-blue-1 bg-clip-text text-transparent">{data.firstName}!</span>
         </h2>
       </header>
       <section className="mb-[56px]">
@@ -40,3 +38,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default AuthRequired(Home)

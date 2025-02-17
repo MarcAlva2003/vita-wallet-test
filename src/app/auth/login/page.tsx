@@ -1,13 +1,19 @@
 'use client'
 
+import { APP_ROUTES } from '@/constants/app-routes.constant'
 import Button from '@/components/UI/button/button.component'
 import { CheckIcon } from '@/assets/icons/ui'
 import Input from '@/components/UI/input/input.component'
 import Link from 'next/link'
 import { MoneyIncomeIcon } from '@/assets/icons'
 import { emailPattern } from '@/constants/regex-patterns.constant'
+import { login } from '@/services/auth.service'
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useUserDataContext } from '@/context/user-data.context'
+import { useUserToken } from '@/hooks/useUserToken,hook'
 
 type Inputs = {
   email: string
@@ -16,21 +22,47 @@ type Inputs = {
 
 export default function LoginPage() {
   const [emailCheck, setEmailCheck] = useState<string>('')
+  const { push } = useRouter()
+  const { setToken, getAccessToken } = useUserToken()
+  const [userMessage, setUserMessage] = useState<string>('')
+  const { setUserData } = useUserDataContext()
   const {
     register,
     trigger,
     formState: { errors },
     clearErrors,
-    watch
+    getValues
   } = useForm<Inputs>()
 
-  const onSubmit = async () => {
-    console.log(watch('email'))
+  const { mutate, isPending } = useMutation({
+    mutationFn: (params: { email: string; password: string }) => login(params),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: async (data) => {
+      if (data?.ok && data.access_token) {
+        push(APP_ROUTES.HOME)
+        setToken(data.access_token)
+        console.log(data.data.id)
+        setUserData({
+          balances: data.data?.attributes?.balances,
+          firstName: data.data?.attributes.first_name,
+          lastName: data.data?.attributes.last_name,
+          uid: data.data.id
+        })
+      } else {
+      }
+    }
+  })
 
+  const onSubmit = async () => {
     const isValid = await trigger()
     if (isValid) {
-      //
+      setUserMessage('')
+      mutate({ password: getValues('password'), email: getValues('email') })
     }
+  }
+
+  if (getAccessToken()) {
+    push(APP_ROUTES.HOME)
   }
 
   return (
@@ -78,9 +110,10 @@ export default function LoginPage() {
               }}
             />
           </div>
-          <Button variant="gradiant" onClick={onSubmit}>
+          <Button variant="gradiant" onClick={onSubmit} disabled={isPending}>
             Iniciar sesion
           </Button>
+          <p>{userMessage}</p>
         </div>
         <div></div>
       </div>
