@@ -12,7 +12,6 @@ export const useProfile = () => {
     isLoading,
     isFetching
   } = useQuery({
-    // Correct usage of useQuery
     queryKey: ['getProfile'],
     queryFn: () =>
       getProfile({
