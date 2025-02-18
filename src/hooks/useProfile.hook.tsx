@@ -6,7 +6,7 @@ import { useUserToken } from './useUserToken.hook'
 
 export const useProfile = () => {
   const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
-  const {setBalances, setUserData} = useUserDataContext()
+  const { setUserData } = useUserDataContext()
   const {
     data: profileData,
     isLoading,
@@ -21,7 +21,7 @@ export const useProfile = () => {
         client: getClient() as string,
         expiry: getExpiry() as string
       }),
-    retry: false,
+    retry: false
   })
 
   useEffect(() => {
@@ -29,15 +29,11 @@ export const useProfile = () => {
       logout()
     } else {
       if (profileData?.data) {
-        console.log('asd',profileData?.data.data.attributes.balances)
-        setBalances(profileData?.data.data.attributes.balances)
         setUserData({
           balances: profileData?.data.data.attributes.balances,
           firstName: profileData?.data.data.attributes.first_name,
           lastName: profileData?.data.data.attributes.last_name,
-          uid: ''
         })
-        // setUserData({balances: profileData?.data.data.attributes.balances})
       }
     }
   }, [profileData, isFetching, isLoading])

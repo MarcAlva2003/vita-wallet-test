@@ -9,8 +9,6 @@ export const AuthRequired = (WrappedComponent: NextComponentType) => {
 
     useEffect(() => {
       if (!getAccessToken()) {  
-        console.log('HERE 1');
-              
         logout()
       }
     }, [])

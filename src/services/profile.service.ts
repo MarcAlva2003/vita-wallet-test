@@ -2,9 +2,7 @@ import { API_ROUTE, APP_NAME, BASE_URL } from './base-url'
 
 import { IAuthParams } from '@/hooks/useUserToken.hook'
 
-export const getProfile = async (params: IAuthParams) => {
-  console.log({params});
-  
+export const getProfile = async (params: IAuthParams) => {  
   try {
     const response = await fetch(`${BASE_URL}${API_ROUTE.PROFILE}`, {
       method: 'GET',
@@ -23,7 +21,6 @@ export const getProfile = async (params: IAuthParams) => {
       statusCode: response.status
     }
   } catch (err) {
-    console.log({ err })
     throw err
   }
 }

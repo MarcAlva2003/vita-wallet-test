@@ -71,8 +71,6 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
     handleClose()
   }
 
-  console.log({ filteredOptions, selectedOption: selectedOption.value })
-
   return (
     <div className="relative select-none" ref={btnDropContainer}>
       <button className={selectBtnClsx} onClick={handleOpenChange}>
