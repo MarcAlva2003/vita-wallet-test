@@ -13,7 +13,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useUserDataContext } from '@/context/user-data.context'
-import { useUserToken } from '@/hooks/useUserToken,hook'
+import { useUserToken } from '@/hooks/useUserToken.hook'
 
 type Inputs = {
   email: string
@@ -23,7 +23,7 @@ type Inputs = {
 export default function LoginPage() {
   const [emailCheck, setEmailCheck] = useState<string>('')
   const { push } = useRouter()
-  const { setToken, getAccessToken } = useUserToken()
+  const { setTokens, getAccessToken } = useUserToken()
   const [userMessage, setUserMessage] = useState<string>('')
   const { setUserData } = useUserDataContext()
   const {
@@ -38,10 +38,14 @@ export default function LoginPage() {
     mutationFn: (params: { email: string; password: string }) => login(params),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: async (data) => {
-      if (data?.ok && data.access_token) {
+      if (data?.ok && data.accessToken && data.client && data.expiry && data.uid) {
         push(APP_ROUTES.HOME)
-        setToken(data.access_token)
-        console.log(data.data.id)
+        setTokens({
+          accessToken: data.accessToken,
+          client: data.client,
+          expiry: data.expiry,
+          uid: data.uid
+        })
         setUserData({
           balances: data.data?.attributes?.balances,
           firstName: data.data?.attributes.first_name,

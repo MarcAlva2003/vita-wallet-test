@@ -1,23 +1,17 @@
-import { APP_ROUTES } from '@/constants/app-routes.constant'
 import type { NextComponentType } from 'next'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useUserToken } from '@/hooks/useUserToken,hook'
+import { useUserToken } from '@/hooks/useUserToken.hook'
 
 export const AuthRequired = (WrappedComponent: NextComponentType) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const AuthRequiredComponent = (props: any) => {
-    const { getAccessToken, removeToken } = useUserToken()
-    const { push } = useRouter()
-
-    const logout = () => {
-      removeToken()
-    }
+    const { getAccessToken, logout } = useUserToken()
 
     useEffect(() => {
-      if (!getAccessToken()) {        
+      if (!getAccessToken()) {  
+        console.log('HERE 1');
+              
         logout()
-        push(APP_ROUTES.LOGIN)
       }
     }, [])
 

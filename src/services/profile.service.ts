@@ -1,30 +1,29 @@
 import { API_ROUTE, APP_NAME, BASE_URL } from './base-url'
 
-interface IGetProfileParams {
-  access_token: string
-  uid: string
-  expiry: string
-  client: string  
-}
+import { IAuthParams } from '@/hooks/useUserToken.hook'
 
-export const getProfile = async (params: IGetProfileParams) => {
+export const getProfile = async (params: IAuthParams) => {
+  console.log({params});
+  
   try {
-    const response = await fetch(`${BASE_URL}${API_ROUTE.LOGIN}`, {
+    const response = await fetch(`${BASE_URL}${API_ROUTE.PROFILE}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'access-token': params.access_token,
+        'access-token': params.accessToken,
         'app-name': APP_NAME,
         uid: params.uid,
         expiry: params.expiry,
         client: params.client
       }
     })
-    const data = await response.json()
-    console.log({data});
-    return data;
-  }catch (err) {
-    console.log({err});
-    
+    return {
+      data: await response.json(),
+      ok: response.ok,
+      statusCode: response.status
+    }
+  } catch (err) {
+    console.log({ err })
+    throw err
   }
 }
