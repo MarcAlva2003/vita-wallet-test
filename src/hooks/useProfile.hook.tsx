@@ -32,6 +32,7 @@ export const useProfile = () => {
           balances: profileData?.data.data.attributes.balances,
           firstName: profileData?.data.data.attributes.first_name,
           lastName: profileData?.data.data.attributes.last_name,
+          email: profileData?.data.data.attributes.email,
         })
       }
     }

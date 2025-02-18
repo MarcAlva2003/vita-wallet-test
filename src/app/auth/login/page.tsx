@@ -50,7 +50,7 @@ export default function LoginPage() {
           balances: data.data?.attributes?.balances,
           firstName: data.data?.attributes.first_name,
           lastName: data.data?.attributes.last_name,
-          uid: data.data.id
+          email: data.data?.attributes.email,
         })
       } else {
       }
