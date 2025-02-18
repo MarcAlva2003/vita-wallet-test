@@ -8,6 +8,7 @@ export interface IUserData {
   balances: IUserBalance
   firstName: string
   lastName: string
+  email: string
 }
 
 export interface IUserDataContext {

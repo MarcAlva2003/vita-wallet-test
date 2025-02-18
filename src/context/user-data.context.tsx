@@ -5,7 +5,8 @@ const UserDataContext = createContext<IUserDataContext>({
   data: {
     balances: {},
     firstName: '',
-    lastName: ''
+    lastName: '',
+    email: ''
   },
 
   setBalances: () => {},
@@ -22,11 +23,13 @@ export const UserDataContextProvider = ({
   const [balances, setBalances] = useState<IUserBalance>({})
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
 
   const setUserData = (data: IUserData) => {
     setBalances(data.balances)
     setFirstName(data.firstName)
     setLastName(data.lastName)
+    setEmail(data.email)
   }
 
   useEffect(() => {
@@ -38,7 +41,8 @@ export const UserDataContextProvider = ({
         data: {
           balances,
           firstName,
-          lastName
+          lastName,
+          email
         },
         setBalances,
         setFirstName,

@@ -16,7 +16,7 @@ export const Sidebar: React.FC<ISidebar> = (props) => {
   const pathname = usePathname()
 
   return (
-    <div className="w-[370px] min-w-[370px] max-w-[370px] h-screen  p-[12vh_92px_64px_0] flex flex-col justify-between relative">
+    <div className="w-[370px] min-w-[370px] max-w-[370px] h-screen sticky top-0  p-[12vh_92px_64px_0] flex flex-col justify-between relative">
       <nav>
         <ul>
           {navItems.map((item: INavItem, index: number) => (
