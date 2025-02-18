@@ -15,7 +15,7 @@ function Home() {
 
   const formattedBals: { currency: string; balance: number }[] = useMemo(() => {
     return Object.entries(data.balances as IUserBalance).map(([currency, balance]) => ({ currency, balance }))
-  }, [])
+  }, [data.balances])
 
   return (
     <div>

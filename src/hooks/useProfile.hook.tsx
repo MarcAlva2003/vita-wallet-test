@@ -1,11 +1,12 @@
 import { getProfile } from '@/services/profile.service'
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useUserDataContext } from '@/context/user-data.context'
 import { useUserToken } from './useUserToken.hook'
 
 export const useProfile = () => {
   const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
-
+  const {setBalances, setUserData} = useUserDataContext()
   const {
     data: profileData,
     isLoading,
@@ -20,15 +21,25 @@ export const useProfile = () => {
         client: getClient() as string,
         expiry: getExpiry() as string
       }),
-    retry: false
+    retry: false,
   })
 
   useEffect(() => {
     if (profileData?.statusCode === 401) {
-      console.log('HERE 2')
       logout()
+    } else {
+      if (profileData?.data) {
+        console.log('asd',profileData?.data.data.attributes.balances)
+        setBalances(profileData?.data.data.attributes.balances)
+        setUserData({
+          balances: profileData?.data.data.attributes.balances,
+          firstName: profileData?.data.data.attributes.first_name,
+          lastName: profileData?.data.data.attributes.last_name,
+          uid: ''
+        })
+        // setUserData({balances: profileData?.data.data.attributes.balances})
+      }
     }
-    console.log({ profileData })
   }, [profileData, isFetching, isLoading])
 
   return {}

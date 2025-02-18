@@ -1,5 +1,5 @@
 import { IUserBalance, IUserData, IUserDataContext } from '@/interfaces/user-data.interfaces'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const UserDataContext = createContext<IUserDataContext>({
   data: {
@@ -35,6 +35,11 @@ export const UserDataContextProvider = ({
     setLastName(data.lastName)
   }
 
+  useEffect(() => {
+console.log({balances});
+
+  }, [balances])
+  
   return (
     <UserDataContext.Provider
       value={{
