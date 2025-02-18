@@ -4,6 +4,7 @@ import { DollarBgIcon } from '@/assets/icons'
 import { INavItem } from '@/constants/nav-items.constant'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useUserToken } from '@/hooks/useUserToken.hook'
 
 interface ISidebar {
   navItems: INavItem[]
@@ -11,6 +12,7 @@ interface ISidebar {
 
 export const Sidebar: React.FC<ISidebar> = (props) => {
   const { navItems } = props
+  const {logout} = useUserToken()
   const pathname = usePathname()
 
   return (
@@ -32,7 +34,7 @@ export const Sidebar: React.FC<ISidebar> = (props) => {
           ))}
         </ul>
       </nav>
-      <button className="w-fit p-4 ml-[64px]">
+      <button className="w-fit p-4 ml-[64px]" onClick={logout}>
         <h3 className="text-white ">Cerrar Sesion</h3>
       </button>
       <div className="absolute w-full h-screen top-0 left-0 z-[-1] bg-blue-1">
