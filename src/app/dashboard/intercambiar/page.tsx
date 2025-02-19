@@ -1,112 +1,31 @@
 'use client'
 
-import { ButtonDrop, IButtonDropOption } from '@/components/UI/select/button-drop.component'
-import { useEffect, useMemo } from 'react'
-
 import { APP_ROUTES } from '@/constants/app-routes.constant'
 import Button from '@/components/UI/button/button.component'
+import { ButtonDrop } from '@/components/UI/select/button-drop.component'
 import { DollarIcon } from '@/assets/icons/ui'
 import Input from '@/components/UI/input/input.component'
-import { useBalFormat } from '@/hooks/useBalFormat.hook'
+import { useExchange } from '@/hooks/useExchange.hook'
 import { useExchangeData } from '@/context/exchange-data.context'
-import { usePrices } from '@/hooks/usePriceshook'
 import { useRouter } from 'next/navigation'
-import { useUserDataContext } from '@/context/user-data.context'
-
-type IInputError = {
-  error: boolean
-  message?: string
-}
 
 export default function Intercambiar() {
   const router = useRouter()
-  const { getCurrencyIcon } = useBalFormat()
-  const { getFromPrice, getToPrice, availableExchangeBal } = usePrices()
-  const { data } = useUserDataContext()
   const { fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal } = useExchangeData()
-
-  const balOptions: IButtonDropOption[] = useMemo(() => {
-    return Object.keys(data.balances).map((item: string) => {
-      return {
-        value: item,
-        label: getCurrencyIcon(item)
-      }
-    })
-  }, [data.balances, availableExchangeBal])
-
-  const availableToBalOptions: IButtonDropOption[] = useMemo(() => {
-    return availableExchangeBal.map((item: string) => {
-      return {
-        value: item,
-        label: getCurrencyIcon(item)
-      }
-    })
-  }, [availableExchangeBal])
-
-  const balanceCurrent: { label: string; amount: number } = useMemo(() => {
-    return {
-      label: fromBal,
-      amount: data.balances[fromBal as string]
-    }
-  }, [fromBal, data.balances])
-
-  const inputFromErrors: IInputError = useMemo(() => {
-    return fromAmount > balanceCurrent.amount
-      ? {
-          error: true,
-          message: 'No tienes suficientes fondos'
-        }
-      : typeof fromAmount !== 'number' || isNaN(fromAmount)
-      ? {
-          error: true,
-          message: 'Ingrese un número con formato válido'
-        }
-      : fromAmount < 0
-      ? {
-          error: true,
-          message: 'No puede ingresar un número menor a 0'
-        }
-      : {
-          error: false
-        }
-  }, [fromAmount])
-
-  const onPriceFromChange = (newVal: string) => {
-    const newFromValue = newVal.length > 0 ? parseFloat(newVal) : 0
-    setFromAmount(newFromValue)
-    setToAmount(getToPrice(fromBal, toBal, newFromValue))
-  }
-  const onPriceToChange = (newVal: string) => {
-    const newToValue = parseFloat(newVal)
-    setToAmount(newToValue)
-    setFromAmount(getFromPrice(fromBal, toBal, newToValue))
-  }
-
-  const onFromBalChange = (newBal: string) => {
-    setFromBal(newBal)
-    onPriceFromChange('0')
-    if (newBal === toBal) {
-      setToBal(availableExchangeBal.filter((item) => item !== newBal)[0])
-    }
-  }
-  const onToBalChange = (newBal: string) => {
-    setToBal(newBal)
-    onPriceFromChange('0')
-    if (newBal === fromBal) {
-      setFromBal(balOptions.filter((item) => item.value !== newBal)[0].value)
-    }
-  }
+  const {
+    availableToBalOptions,
+    balOptions,
+    balanceCurrent,
+    inputFromErrors,
+    onFromBalChange,
+    onPriceFromChange,
+    onPriceToChange,
+    onToBalChange
+  } = useExchange({ fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal })
 
   const onSubmit = () => {
     router.push(APP_ROUTES.EXCHANGE_RESUME)
   }
-
-  useEffect(() => {
-    if (!toBal.length && !fromBal.length && availableExchangeBal.length > 0) {
-      setFromBal(availableExchangeBal[0])
-      setToBal(availableExchangeBal[1])
-    }
-  }, [availableExchangeBal])
 
   return (
     <div className="min-h-[calc(100vh_-_113px)] flex flex-col justify-between">
