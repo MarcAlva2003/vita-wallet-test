@@ -5,7 +5,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useUserToken } from './useUserToken.hook'
 
 export const usePrices = () => {
-  const [statusCode, setStatusCode] = useState<number>(0)
+  const [, setStatusCode] = useState<number>(0)
+  const [exchangeRate, setExchangeRate] = useState<number>();
+
   const [prices, setPrices] = useState<{ [key: string]: { [key: string]: number } }>()
   const [availableExchangeBal, setAvailableExchangeBal] = useState<string[]>([])
   const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
@@ -19,10 +21,12 @@ export const usePrices = () => {
         expiry: getExpiry() as string
       }),
     retry: false,
-    enabled: statusCode !== 200
+    refetchInterval: 60 * 1000 //1 MIN
   })
 
   useEffect(() => {
+    console.log({code: data?.statusCode});
+    
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
       logout()
@@ -46,6 +50,7 @@ export const usePrices = () => {
   const getToPrice = (fromBal: string, toBal: string, fromAmount: number) => {
     if (prices) {
       const price: number = prices[toBal as string][fromBal as string]
+      setExchangeRate(price);
       return (fromAmount * 1) / price
     }
     return 0
@@ -57,6 +62,7 @@ export const usePrices = () => {
     getFromPrice,
     getToPrice,
     availableExchangeBal,
-    isFetching
+    isFetching,
+    exchangeRate
   }
 }

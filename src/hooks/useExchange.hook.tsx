@@ -23,7 +23,7 @@ type IInputError = {
 
 export const useExchange = (props: IUseExchange) => {
   const { fromAmount, fromBal, setFromAmount, setFromBal, setToAmount, setToBal, toBal } = props
-  const { getFromPrice, getToPrice, availableExchangeBal } = usePrices()
+  const { getFromPrice, getToPrice, availableExchangeBal, isFetching, exchangeRate } = usePrices()
   const { getCurrencyIcon } = useBalFormat()
   const { data } = useUserDataContext()
 
@@ -101,12 +101,22 @@ export const useExchange = (props: IUseExchange) => {
     }
   }
 
+  const updatePrices = () => {
+    setToAmount(getToPrice(fromBal, toBal, fromAmount))
+  }
+
   useEffect(() => {
     if (!toBal.length && !fromBal.length && availableExchangeBal.length > 0) {
       setFromBal(availableExchangeBal[0])
       setToBal(availableExchangeBal[1])
     }
   }, [availableExchangeBal])
+
+  useEffect(() => {
+    if (!isFetching) {
+      updatePrices()
+    }
+  }, [isFetching])
 
   return {
     balOptions,
@@ -116,6 +126,8 @@ export const useExchange = (props: IUseExchange) => {
     onPriceFromChange,
     onPriceToChange,
     onFromBalChange,
-    onToBalChange
+    onToBalChange,
+    isFetching,
+    exchangeRate
   }
 }
