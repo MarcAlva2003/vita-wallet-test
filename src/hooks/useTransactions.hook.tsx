@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { ITransaction } from '@/interfaces/transactions.interfaces'
 import { getTransactions } from '@/services/transactions.service'
+import { usePrices } from './usePriceshook'
 import { useQuery } from '@tanstack/react-query'
 import { useUserToken } from './useUserToken.hook'
 

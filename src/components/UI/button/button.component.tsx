@@ -12,7 +12,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { children, variant, size, ...rest } = props
+  const { children, variant, size, className, ...rest } = props
   const variantStyles: Record<IButtonVariant | 'disabled', string> = {
     gradiant: 'bg-gradient-to-r from-blue-2 to-blue-1 text-white',
     outlined: 'bg-gradient-to-r from-blue-2 to-blue-1 bg-white text-blue-1',
@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   )
 
   const buttonClsx = clsx(
-    `${variantStyles[rest.disabled ? 'disabled' : variant]} w-full p-[1px] rounded-[6px] font-semibold`
+    `${className} ${variantStyles[rest.disabled ? 'disabled' : variant]} w-full p-[1px] rounded-[6px] font-semibold`
   )
 
   return (
