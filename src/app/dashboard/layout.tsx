@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Sidebar isOpen={mobileModalOpen} onOpenChange={setMobileModal} navItems={navItems} />
       </div>
       <div className="w-full max-w-[1200px]">
-        <div className="w-full mx-[auto] px-[12px] md:px-[50px] xl:px-[70px] pt-[80px] pb-[70px] max-w-[1100px]">
+        <div className="w-full mx-[auto] px-[16px] md:px-[50px] xl:px-[70px] pt-[40px] md:pt-[80px] pb-[30px] md:pb-[70px] max-w-[1100px]">
           {children}
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         onClick={() => {
           setMobileModal(!mobileModalOpen)
         }}
-        className="flex items-center justify-center w-10 h-10 text-white rounded-[50%] bg-blue-1 absolute top-[10px] right-3 lg:hidden z-[100]"
+        className="flex items-center justify-center w-10 h-10 text-white rounded-[50%] bg-blue-1 fixed top-4 right-4 lg:hidden z-[100]"
       >
         {mobileModalOpen ? <MdClose size={30} /> : <IoMenu size={30} />}
       </button>

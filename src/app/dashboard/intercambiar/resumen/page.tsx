@@ -78,7 +78,7 @@ function ExchangeResume() {
   }, [])
 
   return (
-    <div className="min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
+    <div className="min-h-[calc(100vh_-_70px)] md:min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
       <div className=''>
         <header className="mb-10 relative flex items-center mb-[90px]">
           <Link

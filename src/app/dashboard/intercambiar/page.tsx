@@ -35,8 +35,8 @@ function Intercambiar() {
   }, [fromBal, toBal])
 
   return (
-    <div className="min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
-      <div className="max-h-[calc(100vh_-_150px_-_71px)] h-[calc(100vh_-_150px_-_75px)] pl-[2px] overflow-auto">
+    <div className="min-h-[calc(100vh_-_70px)] md:min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
+      <div className="max-h-[calc(100vh_-_70px_-_71px)] max-h-[calc(100vh_-_150px_-_71px)] h-[calc(100vh_-_150px_-_75px)] pl-[2px] overflow-auto">
         <header className="mb-10">
           <h2>¿Qué deseas intercambiar?</h2>
         </header>
