@@ -31,7 +31,7 @@ function Home() {
       </header>
       <section className="mb-[56px]">
         <h3 className="mb-6">Mis saldos</h3>
-        <ul className="grid grid-cols-3 gap-[20px]">
+        <ul className="grid grid-cols-2 2xl:grid-cols-3 gap-[20px]">
           {formattedBals.map((item, index) => (
             <li key={`balance-card-${index}`}>
               <BalanceCard balance={item.balance} currencyKey={item.currency} />

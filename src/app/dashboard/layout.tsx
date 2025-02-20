@@ -10,14 +10,14 @@ import { useUserToken } from '@/hooks/useUserToken.hook'
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const {} = useProfile()
   const { logout } = useUserToken()
-  const {sessionExpired} = useSessionExpired()
-  
+  const { sessionExpired } = useSessionExpired()
+
   return (
     <div className="flex">
       <Sidebar navItems={navItems} />
-      <div className="w-full p-[53px_120px_60px_70px]">{children}</div>
+      <div className="w-full px-[50px] xl:px-[70px] pt-[80px] pb-[70px] 2xl:ml-[80px] max-w-[1100px]">{children}</div>
       <ModalContainer isOpen={sessionExpired} onClose={logout}>
-        <div className='min-h-5'></div>
+        <div className="min-h-5"></div>
       </ModalContainer>
     </div>
   )

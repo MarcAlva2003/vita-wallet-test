@@ -20,7 +20,8 @@ export const Sidebar: React.FC<ISidebar> = (props) => {
   }
 
   return (
-    <div className="w-[370px] min-w-[370px] max-w-[370px] h-screen sticky top-0  p-[12vh_92px_64px_0] flex flex-col justify-between relative">
+    // w-[370px]
+    <div className="w-[300px] min-w-[300px] max-w-[300px] xl:w-[370px] xl:min-w-[370px] xl:max-w-[370px] h-screen sticky top-0  p-[12vh_40px_64px_0] flex flex-col justify-between relative">
       <nav>
         <ul>
           {navItems.map((item: INavItem, index: number) => (
