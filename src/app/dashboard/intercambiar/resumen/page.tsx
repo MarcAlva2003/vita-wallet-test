@@ -85,7 +85,7 @@ function ExchangeResume() {
             href={APP_ROUTES.EXCHANGE}
             className=" left-[-64px] w-[48px] mt-1 h-[48px] mr-4 flex items-center justify-center"
           >
-            <ArrowLeftIcon className="scale-[1.4]" />
+            <ArrowLeftIcon size={32} />
           </Link>
           <h2>Resumen de transacción</h2>
         </header>

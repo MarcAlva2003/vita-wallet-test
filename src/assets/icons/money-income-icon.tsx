@@ -1,6 +1,14 @@
-export const MoneyIncomeIcon = () => {
+import { IIconProps } from '@/interfaces/icons'
+
+export const MoneyIncomeIcon: React.FC<IIconProps> = (props) => {
   return (
-    <svg viewBox="0 0 662 640" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={props.className}
+      viewBox="0 0 662 640"
+      preserveAspectRatio="xMidYMid meet"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M101.903 585.676C-23.5511 513.3 -23.5511 395.828 101.903 323.396C227.358 250.964 430.774 251.02 556.228 323.396C681.683 395.772 681.683 513.244 556.228 585.676C430.774 658.108 227.358 658.108 101.903 585.676Z"
         fill="#F5F5F5"
