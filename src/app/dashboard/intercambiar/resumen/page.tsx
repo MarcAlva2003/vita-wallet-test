@@ -1,20 +1,28 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { APP_ROUTES } from '@/constants/app-routes.constant'
 import { ArrowLeftIcon } from '@/assets/icons/ui'
+import { BanknoteIcon } from '@/assets/icons'
 import Button from '@/components/UI/button/button.component'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { ModalContainer } from '@/components/UI/modal/modal.component'
+import { postExchange } from '@/services/exchange.service'
 import { useExchange } from '@/hooks/useExchange.hook'
 import { useExchangeData } from '@/context/exchange-data.context'
 import { useFormatText } from '@/hooks/useFormatText.hook'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useUserToken } from '@/hooks/useUserToken.hook'
 
 export default function ExchangeResume() {
   const router = useRouter()
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
   const { formatBalanceNumber } = useFormatText()
   const { fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal } = useExchangeData()
-  const { isFetching, exchangeRate } = useExchange({
+  const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
+  const { isFetching, exchangeRate, resetValues } = useExchange({
     fromAmount,
     fromBal,
     toAmount,
@@ -24,14 +32,45 @@ export default function ExchangeResume() {
     setToAmount,
     setToBal
   })
+  const { mutate, isSuccess } = useMutation({
+    mutationFn: () =>
+      postExchange({
+        accessToken: getAccessToken() as string,
+        uid: getUserId() as string,
+        client: getClient() as string,
+        expiry: getExpiry() as string,
+        amount_sent: fromAmount,
+        currency_received: toBal,
+        currency_sent: fromBal
+      }),
+    onSuccess: (data) => {
+      if (data?.statusCode === 401) {
+        logout()
+      } else if (data?.statusCode === 201) {
+        setSuccessModalOpen(true)
+      } else {
+        alert('No se pudo realizar la operación. Intenta de nuevo más tarde')
+      }
+    }
+  })
 
-  const onSubmit = () => {}
-
+  const onSubmit = () => {
+    if (!isSuccess && !successModalOpen) {
+      mutate()
+    }
+  }
+  
+  
   const goBack = () => {
     router.push(APP_ROUTES.EXCHANGE)
   }
+  
+  const onSuccessModalClose = () => {
+    resetValues();
+    goBack();
 
-  useEffect(() => {
+  }
+  useEffect(() => {    
     if (fromAmount === 0) {
       goBack()
     }
@@ -78,6 +117,13 @@ export default function ExchangeResume() {
           {isFetching ? 'Actualizando...' : 'Intercambiar'}
         </Button>
       </div>
+      <ModalContainer isOpen={successModalOpen} onClose={onSuccessModalClose}>
+        <div className='px-[100px] pt-[32px] pb-[54px]'>
+          <BanknoteIcon className="mb-[32px]"/>
+          <h2 className='text-blue-2 mb-4'>¡Intercambio exitoso!</h2>
+          <p>Ya cuentas con los BTC en tu saldo.</p>
+        </div>
+      </ModalContainer>
     </div>
   )
 }
