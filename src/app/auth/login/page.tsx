@@ -72,9 +72,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="px-[60px] xl:px-[120px] xl:pb-[100px] pt-[120px] w-full h-screen max-w-[1440px] m-[0_auto] grid grid-cols-[2fr_3fr] xl:grid-cols-[2fr_4fr] relative">
-      <div className="w-full flex flex-col justify-between">
-        <h1>Iniciar sesión</h1>
+    <div className="flex items-center lg:px-[60px] md:bg-white lg:bg-[#FFFFFF] md:p-10 xl:px-[120px] xl:pb-[100px] lg:pt-[120px] w-full h-screen max-w-[1440px] m-[0_auto] lg:grid grid-cols-[2fr_3fr] xl:grid-cols-[2fr_4fr] relative">
+      <div className="w-full px-[30px] max-w-[420px] md:shadow-xl md:rounded-[12px] md:mx-[auto] h-full md:h-fit lg:shadow-[none] lg:h-full flex flex-col py-[50px] lg:px-0 lg:pt-0 justify-center lg:justify-between">
+        <h1 className="mb-[100px] lg:mb-0">Iniciar sesión</h1>
         <div>
           <Input
             label="Correo electrónico"
@@ -94,7 +94,7 @@ export default function LoginPage() {
               setEmailCheck(ev.target.value)
             }}
           />
-          <div className="mb-[80px]">
+          <div className="mb-10 lg:mb-[80px]">
             <Input
               label="Contraseña"
               placeholder="Escribe tu contraseña"
@@ -116,7 +116,12 @@ export default function LoginPage() {
                 clearErrors('password')
               }}
               iconRight={
-                <button className='w-full h-full flex items-center justify-center' onClick={() => {setShowPassword(!showPassword)}}>
+                <button
+                  className="w-full h-full flex items-center justify-center"
+                  onClick={() => {
+                    setShowPassword(!showPassword)
+                  }}
+                >
                   {showPassword ? <EyeIcon></EyeIcon> : <EyeOffIcon></EyeOffIcon>}
                 </button>
               }
@@ -129,7 +134,7 @@ export default function LoginPage() {
         </div>
         <div></div>
       </div>
-      <MoneyIncomeIcon className="absolute w-[46%] max-w-[662px] bottom-[5%] right-[60px] 4xl:bottom-[14%]" />
+      <MoneyIncomeIcon className="hidden lg:block absolute w-[46%] max-w-[662px] bottom-[5%] right-[60px] 4xl:bottom-[14%]" />
     </div>
   )
 }
