@@ -6,14 +6,12 @@ import { IUserBalance } from '@/interfaces/user-data.interfaces'
 import { SimpleCoinIcon } from '@/assets/icons'
 import { TransactionItem } from '@/components/transaction-item/transaction-item.component'
 import { useMemo } from 'react'
-import { useProfile } from '@/hooks/useProfile.hook'
 import { useTransactions } from '@/hooks/useTransactions.hook'
 import { useUserDataContext } from '@/context/user-data.context'
 
 function Home() {
   const { data } = useUserDataContext()
 
-  const {} = useProfile()
   const { transactions } = useTransactions()
 
   const formattedBals: { currency: string; balance: number }[] = useMemo(() => {

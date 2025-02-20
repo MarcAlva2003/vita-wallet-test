@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@/assets/icons/ui'
 import clsx from 'clsx'
 import { useOutsideClick } from '@/hooks/useOutsideClick.hook'
 
-interface IButtonDropOption {
+export interface IButtonDropOption {
   value: string
   label: string | React.ReactNode
   icon?: React.ReactNode
@@ -21,8 +21,9 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   const btnDropContainer = useRef<HTMLDivElement>(null)
 
   const [selectedOption, setSelectedOption] = useState<IButtonDropOption>(
-    !value
+    (!value && options.length > 0)
       ? options[0]
+      : (!value && options.length <= 0) ? {label: '', value: ''}
       : (): IButtonDropOption => {
           const val = options.filter((item) => item.value === value)
           return val.length > 0 ? val[0] : options[0]
@@ -50,13 +51,13 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
 
   const filteredOptions = useMemo(() => {
     return options.filter((item) => {
-      return item.value !== selectedOption.value
+      return item.value !== selectedOption?.value
     })
   }, [options, selectedOption])
 
   useEffect(() => {
     setSelectedOption(!value ? options[0] : getValueOption())
-  }, [value])
+  }, [value, options])
   const handleOpenChange = () => {
     setIsOpen(!isOpen)
   }
@@ -74,12 +75,12 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   return (
     <div className="relative select-none" ref={btnDropContainer}>
       <button className={selectBtnClsx} onClick={handleOpenChange}>
-        <div>{selectedOption.label}</div>
+        <div className='min-w-6'>{selectedOption?.label}</div>
         <div className={`ml-1 transition-all ${isOpen ? 'rotate-[-180deg]' : ''}`}>
           <ChevronDownIcon />
         </div>
       </button>
-      {isOpen && (
+      {(isOpen && filteredOptions.length > 0) && (
         <div className={selectOptoinClsx}>
           <ul className="w-full">
             {filteredOptions.map((item: IButtonDropOption) => (
@@ -93,7 +94,7 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
                     onOptionChange(item)
                   }}
                 >
-                  {item.label}
+                  {item?.label}
                 </button>
               </li>
             ))}

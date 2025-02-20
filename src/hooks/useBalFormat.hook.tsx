@@ -1,12 +1,7 @@
 import { BitcoinIcon, ChileIcon, DollarIcon, TetherIcon, USAIcon, UsdcIcon } from '@/assets/icons/ui'
 
+import { IBalCurrency } from '@/interfaces/balance.interfaces'
 import React from 'react'
-
-interface IBalCurrency {
-  icon: React.ReactNode
-  label: string
-  key: string
-}
 
 export const useBalFormat = () => {
   const balanceCurrencies: IBalCurrency[] = [
