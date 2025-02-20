@@ -3,34 +3,44 @@
 import Button from '../UI/button/button.component'
 import { DollarBgIcon } from '@/assets/icons'
 import { INavItem } from '@/constants/nav-items.constant'
+import { IoMenu } from 'react-icons/io5'
 import Link from 'next/link'
+import { MdClose } from 'react-icons/md'
 import { ModalContainer } from '../UI/modal/modal.component'
 import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useUserToken } from '@/hooks/useUserToken.hook'
 
 interface ISidebar {
   navItems: INavItem[]
+  isOpen: boolean
+  onOpenChange: (val: boolean) => void
 }
 
 export const Sidebar: React.FC<ISidebar> = (props) => {
-  const { navItems } = props
+  const { navItems, isOpen, onOpenChange } = props
   const [confirmationModalOpen, setConfirmationModalOpen] = useState<boolean>(false)
   const { logout } = useUserToken()
   const pathname = usePathname()
+  const router = useRouter()
 
   const isCurrentPath = (path: string) => {
     return pathname.includes(path)
   }
 
+  const onRouteChange = (path: string) => {
+    router.push(path)
+    onOpenChange(false)
+  }
+
   return (
-    // w-[370px]
     <div className="w-[300px] min-w-[300px] max-w-[300px] xl:w-[370px] xl:min-w-[370px] xl:max-w-[370px] h-screen sticky top-0 z-[1000] p-[12vh_40px_64px_0] flex flex-col justify-between relative">
       <nav>
         <ul>
           {navItems.map((item: INavItem, index: number) => (
             <li key={`nav-item-${index}`} className="mb-2 last:mb-0">
-              <Link href={item.path}>
+              <Link onClick={() => {onOpenChange(false)}} href={item.path}>
                 <div
                   className={`pl-[80px] w-full py-4 rounded-[0_32px_32px_0] ${
                     isCurrentPath(item.path) ? 'bg-blue-2' : ''
@@ -72,6 +82,9 @@ export const Sidebar: React.FC<ISidebar> = (props) => {
           </div>
         </div>
       </ModalContainer>
+      <button onClick={() => {onOpenChange(!isOpen)}} className="flex items-center justify-center w-10 h-10 text-white rounded-[50%] bg-blue-1 absolute top-[10px] right-[-50px] lg:hidden">
+        {isOpen ? <MdClose size={30} /> : <IoMenu size={30} />}
+      </button>
     </div>
   )
 }

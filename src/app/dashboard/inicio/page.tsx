@@ -37,32 +37,28 @@ function Home() {
       </header>
       <section className="mb-[56px]">
         <h3 className="mb-6">Mis saldos</h3>
-        {!Object.keys(data.balances).length ? (
-          <div className="grid grid-cols-2 2xl:grid-cols-3 gap-[20px]">
-            <Skeleton height={130} width={'100%'} />
-            <Skeleton height={130} width={'100%'} />
-            <Skeleton height={130} width={'100%'} />
-          </div>
-        ) : (
-          <ul className="grid grid-cols-2 2xl:grid-cols-3 gap-[20px]">
-            {formattedBals.map((item, index) => (
-              <li key={`balance-card-${index}`}>
-                <BalanceCard balance={item.balance} currencyKey={item.currency} />
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-[20px]">
+          {!Object.keys(data.balances).length
+            ? ['', '', ''].map((_item, index) => (
+                <Skeleton key={`skeleton-item-balance-${index}`} height={130} width={'100%'} />
+              ))
+            : formattedBals.map((item, index) => (
+                <li key={`balance-card-${index}`}>
+                  <BalanceCard balance={item.balance} currencyKey={item.currency} />
+                </li>
+              ))}
+        </ul>
       </section>
       <section>
         <h3 className="mb-6">Historial</h3>
         {isLoading ? (
           <div>
-            <TransactionItemSkeleton/>
-            <TransactionItemSkeleton/>
-            <TransactionItemSkeleton/>
-            <TransactionItemSkeleton/>
-            <TransactionItemSkeleton/>
-            <TransactionItemSkeleton/>
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
+            <TransactionItemSkeleton />
           </div>
         ) : (
           <ul>
