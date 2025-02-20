@@ -1,8 +1,9 @@
 'use client'
 
+import { CheckIcon, EyeIcon, EyeOffIcon } from '@/assets/icons/ui'
+
 import { APP_ROUTES } from '@/constants/app-routes.constant'
 import Button from '@/components/UI/button/button.component'
-import { CheckIcon } from '@/assets/icons/ui'
 import Input from '@/components/UI/input/input.component'
 import Link from 'next/link'
 import { MoneyIncomeIcon } from '@/assets/icons'
@@ -21,6 +22,7 @@ type Inputs = {
 }
 
 export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const [emailCheck, setEmailCheck] = useState<string>('')
   const { push } = useRouter()
   const { setTokens, getAccessToken } = useUserToken()
@@ -50,7 +52,7 @@ export default function LoginPage() {
           balances: data.data?.attributes?.balances,
           firstName: data.data?.attributes.first_name,
           lastName: data.data?.attributes.last_name,
-          email: data.data?.attributes.email,
+          email: data.data?.attributes.email
         })
       } else {
       }
@@ -97,6 +99,7 @@ export default function LoginPage() {
               label="Contraseña"
               placeholder="Escribe tu contraseña"
               labelBottom={<Link href={'/'}>¿Olvidaste tu contaseña?</Link>}
+              type={showPassword ? 'text' : 'password'}
               {...register('password', {
                 required: {
                   value: true,
@@ -112,6 +115,11 @@ export default function LoginPage() {
               onChange={() => {
                 clearErrors('password')
               }}
+              iconRight={
+                <button className='w-full h-full flex items-center justify-center' onClick={() => {setShowPassword(!showPassword)}}>
+                  {showPassword ? <EyeIcon></EyeIcon> : <EyeOffIcon></EyeOffIcon>}
+                </button>
+              }
             />
           </div>
           <Button variant="gradiant" onClick={onSubmit} disabled={isPending}>

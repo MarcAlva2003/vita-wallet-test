@@ -35,11 +35,11 @@ const Input: React.FC<InputProps> = (props) => {
       {/* INPUT BODY */}
       <div className="relative">
         {iconLeft && (
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-sm">{iconLeft}</div>
+          <div className="absolute inset-y-0 left-0 flex items-center w-[50px] justify-center">{iconLeft}</div>
         )}
         <input className={inputClsx} {...rest} />
         {iconRight && (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">{iconRight}</div>
+          <div className="absolute inset-y-0 right-0 flex items-center w-[50px] justify-center">{iconRight}</div>
         )}
       </div>
       {/* INPUT BOTTOM */}
