@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { getPrices } from '@/services/prices.service'
 import { useQuery } from '@tanstack/react-query'
+import { useSessionExpired } from '@/context/session-expired.context'
 import { useUserToken } from './useUserToken.hook'
 
 export const usePrices = () => {
@@ -10,7 +11,8 @@ export const usePrices = () => {
 
   const [prices, setPrices] = useState<{ [key: string]: { [key: string]: number } }>()
   const [availableExchangeBal, setAvailableExchangeBal] = useState<string[]>([])
-  const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
+  const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
+  const { onSessionExpired } = useSessionExpired()
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ['getPrices'],
     queryFn: () =>
@@ -27,7 +29,7 @@ export const usePrices = () => {
   useEffect(() => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
-      logout()
+      onSessionExpired()
     } else {
       if (data?.data.prices) {
         const prices = data?.data.prices

@@ -15,14 +15,16 @@ import { useExchangeData } from '@/context/exchange-data.context'
 import { useFormatText } from '@/hooks/useFormatText.hook'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useSessionExpired } from '@/context/session-expired.context'
 import { useUserToken } from '@/hooks/useUserToken.hook'
 
 function ExchangeResume() {
   const router = useRouter()
+  const { onSessionExpired } = useSessionExpired()
   const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
   const { formatBalanceNumber } = useFormatText()
   const { fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal } = useExchangeData()
-  const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
+  const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
   const { isFetching, exchangeRate, resetValues } = useExchange({
     fromAmount,
     fromBal,
@@ -46,7 +48,7 @@ function ExchangeResume() {
       }),
     onSuccess: (data) => {
       if (data?.statusCode === 401) {
-        logout()
+        onSessionExpired()
       } else if (data?.statusCode === 201) {
         setSuccessModalOpen(true)
       } else {

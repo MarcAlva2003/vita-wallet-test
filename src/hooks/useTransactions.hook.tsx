@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react'
 import { ITransaction } from '@/interfaces/transactions.interfaces'
 import { getTransactions } from '@/services/transactions.service'
 import { useQuery } from '@tanstack/react-query'
+import { useSessionExpired } from '@/context/session-expired.context'
 import { useUserToken } from './useUserToken.hook'
 
 export const useTransactions = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([])
   const [statusCode, setStatusCode] = useState<number>(0)
-  const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
+  const {onSessionExpired} = useSessionExpired()
+  const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
   const {
     data,
     isLoading,
@@ -29,7 +31,7 @@ export const useTransactions = () => {
   useEffect(() => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
-      logout()
+      onSessionExpired()
     } else {
       if (data?.data.data) {
         const transactions: ITransaction[] = data?.data.data
