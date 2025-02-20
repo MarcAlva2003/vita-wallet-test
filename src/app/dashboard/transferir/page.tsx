@@ -1,7 +1,9 @@
 'use client'
 
-export default function Transferir () {
-  return (
-    <div></div>
-  );
+import { AuthRequired } from '@/HOC/isAuthenticated.hoc'
+
+function Transferir() {
+  return <div></div>
 }
+
+export default AuthRequired(Transferir)

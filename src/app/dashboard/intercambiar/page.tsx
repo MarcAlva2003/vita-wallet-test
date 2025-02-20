@@ -1,6 +1,7 @@
 'use client'
 
 import { APP_ROUTES } from '@/constants/app-routes.constant'
+import { AuthRequired } from '@/HOC/isAuthenticated.hoc'
 import Button from '@/components/UI/button/button.component'
 import { ButtonDrop } from '@/components/UI/select/button-drop.component'
 import { DollarIcon } from '@/assets/icons/ui'
@@ -9,7 +10,7 @@ import { useExchange } from '@/hooks/useExchange.hook'
 import { useExchangeData } from '@/context/exchange-data.context'
 import { useRouter } from 'next/navigation'
 
-export default function Intercambiar() {
+function Intercambiar() {
   const router = useRouter()
   const { fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal } = useExchangeData()
   const {
@@ -110,3 +111,5 @@ export default function Intercambiar() {
     </div>
   )
 }
+
+export default AuthRequired(Intercambiar)

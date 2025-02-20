@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { APP_ROUTES } from '@/constants/app-routes.constant'
 import { ArrowLeftIcon } from '@/assets/icons/ui'
+import { AuthRequired } from '@/HOC/isAuthenticated.hoc'
 import { BanknoteIcon } from '@/assets/icons'
 import Button from '@/components/UI/button/button.component'
 import Link from 'next/link'
@@ -16,9 +17,9 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useUserToken } from '@/hooks/useUserToken.hook'
 
-export default function ExchangeResume() {
+function ExchangeResume() {
   const router = useRouter()
-  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
   const { formatBalanceNumber } = useFormatText()
   const { fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal } = useExchangeData()
   const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
@@ -59,18 +60,16 @@ export default function ExchangeResume() {
       mutate()
     }
   }
-  
-  
+
   const goBack = () => {
     router.push(APP_ROUTES.EXCHANGE)
   }
-  
-  const onSuccessModalClose = () => {
-    resetValues();
-    goBack();
 
+  const onSuccessModalClose = () => {
+    resetValues()
+    goBack()
   }
-  useEffect(() => {    
+  useEffect(() => {
     if (fromAmount === 0) {
       goBack()
     }
@@ -118,12 +117,14 @@ export default function ExchangeResume() {
         </Button>
       </div>
       <ModalContainer isOpen={successModalOpen} onClose={onSuccessModalClose}>
-        <div className='px-[100px] pt-[32px] pb-[54px]'>
-          <BanknoteIcon className="mb-[32px]"/>
-          <h2 className='text-blue-2 mb-4'>¡Intercambio exitoso!</h2>
+        <div className="px-[100px] pt-[32px] pb-[54px]">
+          <BanknoteIcon className="mb-[32px]" />
+          <h2 className="text-blue-2 mb-4">¡Intercambio exitoso!</h2>
           <p>Ya cuentas con los BTC en tu saldo.</p>
         </div>
       </ModalContainer>
     </div>
   )
 }
+
+export default AuthRequired(ExchangeResume)
