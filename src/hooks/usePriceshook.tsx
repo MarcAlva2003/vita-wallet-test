@@ -8,7 +8,6 @@ import { useUserToken } from './useUserToken.hook'
 export const usePrices = () => {
   const [, setStatusCode] = useState<number>(0)
   const [exchangeRate, setExchangeRate] = useState<number>()
-
   const [prices, setPrices] = useState<{ [key: string]: { [key: string]: number } }>()
   const [availableExchangeBal, setAvailableExchangeBal] = useState<string[]>([])
   const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
@@ -25,19 +24,6 @@ export const usePrices = () => {
     retry: false,
     refetchInterval: 60 * 1000 //1 MIN
   })
-
-  useEffect(() => {
-    setStatusCode(data?.statusCode as number)
-    if (data?.statusCode === 401) {
-      onSessionExpired()
-    } else {
-      if (data?.data.prices) {
-        const prices = data?.data.prices
-        setPrices(prices)
-        setAvailableExchangeBal(Object.keys(prices).map((item: string) => item))
-      }
-    }
-  }, [data, isFetching, isLoading])
 
   const getFromPrice = (fromBal: string, toBal: string, toAmount: number): number => {
     if (prices) {
@@ -56,6 +42,26 @@ export const usePrices = () => {
     return 0
   }
 
+  const getBtcMinSend = (toBal: string): number => {
+    if (prices) {
+      return prices[toBal as string].btc_min_total_send_external as number
+    }
+    return 0
+  }
+
+  useEffect(() => {
+    setStatusCode(data?.statusCode as number)
+    if (data?.statusCode === 401) {
+      onSessionExpired()
+    } else {
+      if (data?.data.prices) {
+        const prices = data?.data.prices
+        setPrices(prices)
+        setAvailableExchangeBal(Object.keys(prices).map((item: string) => item))
+      }
+    }
+  }, [data, isFetching, isLoading])
+
   return {
     pricesLoading: isLoading,
     prices: data,
@@ -63,6 +69,7 @@ export const usePrices = () => {
     getToPrice,
     availableExchangeBal,
     isFetching,
-    exchangeRate
+    exchangeRate,
+    getBtcMinSend
   }
 }
