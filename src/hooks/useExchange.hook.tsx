@@ -37,7 +37,7 @@ export const useExchange = (props: IUseExchange) => {
         label: getCurrencyIcon(item)
       }
     })
-  }, [data.balances, availableExchangeBal])
+  }, [data.balances, getCurrencyIcon])
 
   const availableToBalOptions: IButtonDropOption[] = useMemo(() => {
     return availableExchangeBal.map((item: string) => {
@@ -46,7 +46,7 @@ export const useExchange = (props: IUseExchange) => {
         label: getCurrencyIcon(item)
       }
     })
-  }, [availableExchangeBal])
+  }, [availableExchangeBal, getCurrencyIcon])
 
   const balanceCurrent: { label: string; amount: number } = useMemo(() => {
     return {
@@ -79,7 +79,7 @@ export const useExchange = (props: IUseExchange) => {
       : {
           error: false
         }
-  }, [fromAmount])
+  }, [balanceCurrent.amount, formatBalanceNumber, fromAmount, fromBal, minAmountSend])
 
   const onPriceFromChange = (newVal: string) => {
     const newFromValue = newVal.length > 0 ? parseFloat(newVal) : 0
@@ -109,36 +109,34 @@ export const useExchange = (props: IUseExchange) => {
     }
   }
 
-  const updatePrices = () => {
-    setToAmount(getToPrice(fromBal, toBal, fromAmount))
-  }
-
   const resetValues = () => {
     setToAmount(0)
     setFromAmount(0)
   }
 
-  const calcMinSendAmount = () => {
-    if (!fromBal.length || !toBal) return
-    setMinAmountSend(getToPrice('btc', fromBal, getBtcMinSend(toBal)))
-  }
-
   useEffect(() => {
+    const calcMinSendAmount = () => {
+      if (!fromBal.length || !toBal) return
+      setMinAmountSend(getToPrice('btc', fromBal, getBtcMinSend(toBal)))
+    }
     calcMinSendAmount()
-  }, [fromBal, toBal])
+  }, [fromBal, getBtcMinSend, getToPrice, toBal])
 
   useEffect(() => {
     if (!toBal.length && !fromBal.length && availableExchangeBal.length > 0) {
       setFromBal(availableExchangeBal[0])
       setToBal(availableExchangeBal[1])
     }
-  }, [availableExchangeBal])
+  }, [availableExchangeBal, fromBal.length, setFromBal, setToBal, toBal.length])
 
   useEffect(() => {
+    const updatePrices = () => {
+      setToAmount(getToPrice(fromBal, toBal, fromAmount))
+    }
     if (!isFetching) {
       updatePrices()
     }
-  }, [isFetching])
+  }, [fromAmount, fromBal, getToPrice, isFetching, setToAmount, toBal])
 
   return {
     balOptions,

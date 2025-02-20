@@ -38,7 +38,7 @@ export const useProfile = () => {
         })
       }
     }
-  }, [profileData, isFetching, isLoading])
+  }, [profileData, isFetching, isLoading, onSessionExpired, setUserData])
 
   return {}
 }

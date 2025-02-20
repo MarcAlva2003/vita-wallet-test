@@ -1,6 +1,8 @@
-export const BanknoteIcon = () => {
+import { IIconProps } from "@/interfaces/icons"
+
+export const BanknoteIcon = (props: IIconProps) => {
   return (
-    <svg width="308" height="304" viewBox="0 0 308 304" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={props.className} width="308" height="304" viewBox="0 0 308 304" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M150.489 304C232.569 304 299.108 265.596 299.108 218.222C299.108 170.848 232.569 132.443 150.489 132.443C68.4098 132.443 1.87109 170.848 1.87109 218.222C1.87109 265.596 68.4098 304 150.489 304Z"
         fill="#F5F5F5"
