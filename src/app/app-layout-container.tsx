@@ -3,6 +3,7 @@
 import { Geist, Geist_Mono, Open_Sans } from 'next/font/google'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+import { SessionExpiredContextProvider } from '@/context/session-expired.context'
 import { UserDataContextProvider } from '@/context/user-data.context'
 
 const geistSans = Geist({
@@ -22,7 +23,9 @@ export default function AppLayoutContainer({ children }: Readonly<{ children: Re
   return (
     <body className={`${geistSans.variable} ${geistMono.variable} ${openSans.className} antialiased`}>
       <QueryClientProvider client={queryClient}>
-        <UserDataContextProvider>{children}</UserDataContextProvider>
+        <UserDataContextProvider>
+          <SessionExpiredContextProvider>{children}</SessionExpiredContextProvider>
+        </UserDataContextProvider>
       </QueryClientProvider>
     </body>
   )

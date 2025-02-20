@@ -1,7 +1,11 @@
 'use client'
 
-export default function Perfil () {
+import { AuthRequired } from "@/HOC/isAuthenticated.hoc";
+
+function Perfil () {
   return (
     <div></div>
   );
 }
+
+export default AuthRequired(Perfil)

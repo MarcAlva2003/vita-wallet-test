@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 
 import { IButtonDropOption } from '@/components/UI/select/button-drop.component'
 import { useBalFormat } from './useBalFormat.hook'
+import { useFormatText } from './useFormatText.hook'
 import { usePrices } from './usePriceshook'
 import { useUserDataContext } from '@/context/user-data.context'
 
@@ -23,9 +24,11 @@ type IInputError = {
 
 export const useExchange = (props: IUseExchange) => {
   const { fromAmount, fromBal, setFromAmount, setFromBal, setToAmount, setToBal, toBal } = props
-  const { getFromPrice, getToPrice, availableExchangeBal, isFetching, exchangeRate } = usePrices()
+  const { getFromPrice, getToPrice, availableExchangeBal, isFetching, exchangeRate, getBtcMinSend } = usePrices()
   const { getCurrencyIcon } = useBalFormat()
   const { data } = useUserDataContext()
+  const { formatBalanceNumber } = useFormatText()
+  const [minAmountSend, setMinAmountSend] = useState<number>(0)
 
   const balOptions: IButtonDropOption[] = useMemo(() => {
     return Object.keys(data.balances).map((item: string) => {
@@ -57,6 +60,11 @@ export const useExchange = (props: IUseExchange) => {
       ? {
           error: true,
           message: 'No tienes suficientes fondos'
+        }
+      : fromAmount < minAmountSend
+      ? {
+          error: true,
+          message: `Debes enviar al menos ${formatBalanceNumber(minAmountSend, 2)} ${fromBal.toUpperCase()}`
         }
       : typeof fromAmount !== 'number' || isNaN(fromAmount)
       ? {
@@ -110,6 +118,15 @@ export const useExchange = (props: IUseExchange) => {
     setFromAmount(0)
   }
 
+  const calcMinSendAmount = () => {
+    if (!fromBal.length || !toBal) return
+    setMinAmountSend(getToPrice('btc', fromBal, getBtcMinSend(toBal)))
+  }
+
+  useEffect(() => {
+    calcMinSendAmount()
+  }, [fromBal, toBal])
+
   useEffect(() => {
     if (!toBal.length && !fromBal.length && availableExchangeBal.length > 0) {
       setFromBal(availableExchangeBal[0])
@@ -135,5 +152,6 @@ export const useExchange = (props: IUseExchange) => {
     onPriceToChange,
     onFromBalChange,
     onToBalChange,
+    minAmountSend
   }
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { APP_ROUTES } from '@/constants/app-routes.constant'
 import { ArrowLeftIcon } from '@/assets/icons/ui'
+import { AuthRequired } from '@/HOC/isAuthenticated.hoc'
 import { BanknoteIcon } from '@/assets/icons'
 import Button from '@/components/UI/button/button.component'
 import Link from 'next/link'
@@ -14,14 +15,16 @@ import { useExchangeData } from '@/context/exchange-data.context'
 import { useFormatText } from '@/hooks/useFormatText.hook'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useSessionExpired } from '@/context/session-expired.context'
 import { useUserToken } from '@/hooks/useUserToken.hook'
 
-export default function ExchangeResume() {
+function ExchangeResume() {
   const router = useRouter()
-  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
+  const { onSessionExpired } = useSessionExpired()
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
   const { formatBalanceNumber } = useFormatText()
   const { fromAmount, fromBal, toAmount, toBal, setFromAmount, setFromBal, setToAmount, setToBal } = useExchangeData()
-  const { getAccessToken, getUserId, getClient, getExpiry, logout } = useUserToken()
+  const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
   const { isFetching, exchangeRate, resetValues } = useExchange({
     fromAmount,
     fromBal,
@@ -45,7 +48,7 @@ export default function ExchangeResume() {
       }),
     onSuccess: (data) => {
       if (data?.statusCode === 401) {
-        logout()
+        onSessionExpired()
       } else if (data?.statusCode === 201) {
         setSuccessModalOpen(true)
       } else {
@@ -59,26 +62,24 @@ export default function ExchangeResume() {
       mutate()
     }
   }
-  
-  
+
   const goBack = () => {
     router.push(APP_ROUTES.EXCHANGE)
   }
-  
-  const onSuccessModalClose = () => {
-    resetValues();
-    goBack();
 
+  const onSuccessModalClose = () => {
+    resetValues()
+    goBack()
   }
-  useEffect(() => {    
+  useEffect(() => {
     if (fromAmount === 0) {
       goBack()
     }
   }, [])
 
   return (
-    <div className="min-h-[calc(100vh_-_113px)] flex flex-col justify-between">
-      <div>
+    <div className="min-h-[calc(100vh_-_70px)] md:min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
+      <div className=''>
         <header className="mb-10 relative flex items-center mb-[90px]">
           <Link
             href={APP_ROUTES.EXCHANGE}
@@ -109,21 +110,23 @@ export default function ExchangeResume() {
           </div>
         </div>
       </div>
-      <div className="flex">
-        <Button onClick={goBack} variant="outlined" className="w-[180px] mr-5">
+      <div className="flex pt-4">
+        <Button onClick={goBack} variant="outlined" className="max-w-[185px] mr-5">
           Atrás
         </Button>
-        <Button disabled={isFetching} variant="gradiant" className="w-[180px]" onClick={onSubmit}>
+        <Button disabled={isFetching} variant="gradiant" className="max-w-[185px]" onClick={onSubmit}>
           {isFetching ? 'Actualizando...' : 'Intercambiar'}
         </Button>
       </div>
       <ModalContainer isOpen={successModalOpen} onClose={onSuccessModalClose}>
-        <div className='px-[100px] pt-[32px] pb-[54px]'>
-          <BanknoteIcon className="mb-[32px]"/>
-          <h2 className='text-blue-2 mb-4'>¡Intercambio exitoso!</h2>
+        <div className="px-[100px] pt-[32px] pb-[54px]">
+          <BanknoteIcon className="mb-[32px]" />
+          <h2 className="text-blue-2 mb-4">¡Intercambio exitoso!</h2>
           <p>Ya cuentas con los BTC en tu saldo.</p>
         </div>
       </ModalContainer>
     </div>
   )
 }
+
+export default AuthRequired(ExchangeResume)

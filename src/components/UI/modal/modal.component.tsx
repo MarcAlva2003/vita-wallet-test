@@ -8,7 +8,7 @@ import clsx from 'clsx'
 interface IModalContainer {
   children: React.ReactNode
   isOpen: boolean
-  onClose: () => void
+  onClose?: () => void
 }
 export const ModalContainer: React.FC<IModalContainer> = (props) => {
   const { children, isOpen, onClose } = props
@@ -33,11 +33,13 @@ export const ModalContainer: React.FC<IModalContainer> = (props) => {
   return (
     <div className={modalBgClsx}>
       <div className={modalContainerClsx}>
-        <div className="flex justify-end">
+        {onClose && (
+          <div className="flex justify-end">
           <button className="p-1" onClick={onClose}>
             <XIcon />
           </button>
         </div>
+        )}
         {children}
       </div>
     </div>

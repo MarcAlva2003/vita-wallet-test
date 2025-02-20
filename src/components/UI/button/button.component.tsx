@@ -27,8 +27,8 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   const btnContainerClsx = clsx(
     `w-full flex justify-center ${sizeStyles[size ?? 'large']} ${
-      variant === 'outlined' && !rest.disabled ? 'bg-white' : ''
-    } rounded-[4px] text-base flex items-center`
+      variant === 'outlined' && !rest.disabled ? 'bg-white hover:bg-gray-3 focus:bg-gray-2 active:bg-gray-2' : ''
+    } ${(variant === 'gradiant' && !rest.disabled) && 'hover:bg-[#00000010] active:bg-[#00000030]'} rounded-[4px] text-base flex items-center`
   )
 
   const buttonClsx = clsx(

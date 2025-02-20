@@ -1,6 +1,8 @@
 import { IUserBalance, IUserData, IUserDataContext } from '@/interfaces/user-data.interfaces'
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import { ModalContainer } from '@/components/UI/modal/modal.component'
+
 const UserDataContext = createContext<IUserDataContext>({
   data: {
     balances: {},
