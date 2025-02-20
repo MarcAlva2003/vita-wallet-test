@@ -105,6 +105,11 @@ export const useExchange = (props: IUseExchange) => {
     setToAmount(getToPrice(fromBal, toBal, fromAmount))
   }
 
+  const resetValues = () => {
+    setToAmount(0)
+    setFromAmount(0)
+  }
+
   useEffect(() => {
     if (!toBal.length && !fromBal.length && availableExchangeBal.length > 0) {
       setFromBal(availableExchangeBal[0])
@@ -123,11 +128,12 @@ export const useExchange = (props: IUseExchange) => {
     availableToBalOptions,
     balanceCurrent,
     inputFromErrors,
+    isFetching,
+    exchangeRate,
+    resetValues,
     onPriceFromChange,
     onPriceToChange,
     onFromBalChange,
     onToBalChange,
-    isFetching,
-    exchangeRate
   }
 }
