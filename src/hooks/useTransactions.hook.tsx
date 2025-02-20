@@ -41,6 +41,7 @@ export const useTransactions = () => {
   }, [data, isFetching, isLoading])
 
   return {
-    transactions
+    transactions,
+    isLoading
   }
 }
