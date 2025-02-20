@@ -1,0 +1,22 @@
+.bg-modal-container, .modal-container {
+  transition: all ease 0.15s;
+  z-index: 100;
+}
+.bg-modal-open {
+  opacity: 1;
+  visibility: visible;
+}
+.bg-modal-closed {
+  opacity: 0;
+  visibility: hidden;
+}
+.modal-open {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+.modal-closed {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(.2);
+}

@@ -1,0 +1,5 @@
+export { BanknoteIcon } from './banknote-icon'
+export { SimpleCoinIcon } from './coin-icon'
+export { CoinsIcon } from './coins-icon'
+export { DollarBgIcon } from './dollar-bg-icon'
+export { MoneyIncomeIcon } from './money-income-icon'
