@@ -8,7 +8,7 @@ import { useUserToken } from './useUserToken.hook'
 export const usePrices = () => {
   const [, setStatusCode] = useState<number>(0)
   const [exchangeRate, setExchangeRate] = useState<number>()
-  const [prices, setPrices] = useState<{ [key: string]: { [key: string]: number } }>()
+  const [prices, setPrices] = useState<{ [key: string]: { [key: string]: number } } | undefined>(undefined)
   const [availableExchangeBal, setAvailableExchangeBal] = useState<string[]>([])
   const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
   const { onSessionExpired } = useSessionExpired()
