@@ -6,7 +6,7 @@ import { useUserToken } from './useUserToken.hook'
 
 export const usePrices = () => {
   const [, setStatusCode] = useState<number>(0)
-  const [exchangeRate, setExchangeRate] = useState<number>();
+  const [exchangeRate, setExchangeRate] = useState<number>()
 
   const [prices, setPrices] = useState<{ [key: string]: { [key: string]: number } }>()
   const [availableExchangeBal, setAvailableExchangeBal] = useState<string[]>([])
@@ -25,8 +25,6 @@ export const usePrices = () => {
   })
 
   useEffect(() => {
-    console.log({code: data?.statusCode});
-    
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
       logout()
@@ -50,7 +48,7 @@ export const usePrices = () => {
   const getToPrice = (fromBal: string, toBal: string, fromAmount: number) => {
     if (prices) {
       const price: number = prices[toBal as string][fromBal as string]
-      setExchangeRate(price);
+      setExchangeRate(price)
       return (fromAmount * 1) / price
     }
     return 0
