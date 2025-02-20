@@ -9,13 +9,9 @@ import { useUserToken } from './useUserToken.hook'
 export const useTransactions = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([])
   const [statusCode, setStatusCode] = useState<number>(0)
-  const {onSessionExpired} = useSessionExpired()
+  const { onSessionExpired } = useSessionExpired()
   const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
-  const {
-    data,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: ['getTransactions'],
     queryFn: () =>
       getTransactions({
@@ -38,7 +34,7 @@ export const useTransactions = () => {
         setTransactions(transactions)
       }
     }
-  }, [data, isFetching, isLoading])
+  }, [data, isFetching, isLoading, onSessionExpired])
 
   return {
     transactions,

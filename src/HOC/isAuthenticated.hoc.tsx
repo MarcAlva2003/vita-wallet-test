@@ -8,10 +8,10 @@ export const AuthRequired = (WrappedComponent: NextComponentType) => {
     const { getAccessToken, logout } = useUserToken()
 
     useEffect(() => {
-      if (!getAccessToken()) {  
+      if (!getAccessToken()) {
         logout()
       }
-    }, [])
+    })
 
     return <WrappedComponent {...props} />
   }

@@ -60,7 +60,7 @@ export const usePrices = () => {
         setAvailableExchangeBal(Object.keys(prices).map((item: string) => item))
       }
     }
-  }, [data, isFetching, isLoading])
+  }, [data, isFetching, isLoading, onSessionExpired])
 
   return {
     pricesLoading: isLoading,

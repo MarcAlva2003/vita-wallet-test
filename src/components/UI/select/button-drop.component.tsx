@@ -21,9 +21,10 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   const btnDropContainer = useRef<HTMLDivElement>(null)
 
   const [selectedOption, setSelectedOption] = useState<IButtonDropOption>(
-    (!value && options.length > 0)
+    !value && options.length > 0
       ? options[0]
-      : (!value && options.length <= 0) ? {label: '', value: ''}
+      : !value && options.length <= 0
+      ? { label: '', value: '' }
       : (): IButtonDropOption => {
           const val = options.filter((item) => item.value === value)
           return val.length > 0 ? val[0] : options[0]
@@ -44,11 +45,6 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
 
   useOutsideClick(btnDropContainer, onClickOutsideHandler)
 
-  const getValueOption = (): IButtonDropOption => {
-    const val = options.filter((item) => item.value === value)
-    return val.length > 0 ? val[0] : options[0]
-  }
-
   const filteredOptions = useMemo(() => {
     return options.filter((item) => {
       return item.value !== selectedOption?.value
@@ -56,8 +52,14 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   }, [options, selectedOption])
 
   useEffect(() => {
+    const getValueOption = (): IButtonDropOption => {
+      const val = options.filter((item) => item.value === value)
+      return val.length > 0 ? val[0] : options[0]
+    }
+
     setSelectedOption(!value ? options[0] : getValueOption())
   }, [value, options])
+
   const handleOpenChange = () => {
     setIsOpen(!isOpen)
   }
@@ -75,12 +77,12 @@ export const ButtonDrop: React.FC<IButtonDrop> = (props) => {
   return (
     <div className="relative select-none" ref={btnDropContainer}>
       <button className={selectBtnClsx} onClick={handleOpenChange}>
-        <div className='min-w-6'>{selectedOption?.label}</div>
+        <div className="min-w-6">{selectedOption?.label}</div>
         <div className={`ml-1 transition-all ${isOpen ? 'rotate-[-180deg]' : ''}`}>
           <ChevronDownIcon />
         </div>
       </button>
-      {(isOpen && filteredOptions.length > 0) && (
+      {isOpen && filteredOptions.length > 0 && (
         <div className={selectOptoinClsx}>
           <ul className="w-full">
             {filteredOptions.map((item: IButtonDropOption) => (

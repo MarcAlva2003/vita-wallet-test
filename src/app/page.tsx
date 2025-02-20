@@ -8,13 +8,13 @@ import { useUserToken } from '@/hooks/useUserToken.hook'
 
 function Home() {
   const { push } = useRouter()
-  const {getAccessToken} = useUserToken()
+  const { getAccessToken } = useUserToken()
   useEffect(() => {
-    if (!getAccessToken()){
+    if (!getAccessToken()) {
       push(APP_ROUTES.LOGIN)
     }
     push(APP_ROUTES.HOME)
-  }, [])
+  })
 
   return <></>
 }

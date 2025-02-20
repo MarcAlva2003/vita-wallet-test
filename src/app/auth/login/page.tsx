@@ -38,7 +38,6 @@ export default function LoginPage() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (params: { email: string; password: string }) => login(params),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: async (data) => {
       if (data?.ok && data.accessToken && data.client && data.expiry && data.uid) {
         push(APP_ROUTES.HOME)
