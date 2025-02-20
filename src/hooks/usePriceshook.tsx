@@ -35,8 +35,13 @@ export const usePrices = () => {
 
   const getToPrice = (fromBal: string, toBal: string, fromAmount: number) => {
     if (prices) {
+      console.log({prices});
+      
       const price: number = prices[toBal as string][fromBal as string]
       setExchangeRate(price)
+      console.log('TEST: ', {prices: prices[toBal as string], toBal});
+      
+      console.log({price});
       return (fromAmount * 1) / price
     }
     return 0
