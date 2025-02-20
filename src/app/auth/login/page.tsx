@@ -83,9 +83,9 @@ export default function LoginPage() {
             {...register('email', {
               required: {
                 value: true,
-                message: 'Email is required'
+                message: 'Por favor ingrese su email'
               },
-              pattern: { value: emailPattern, message: 'Please, enter a valid email' }
+              pattern: { value: emailPattern, message: 'Por favor, ingrese un email válido' }
             })}
             error={!!errors.email}
             errorMessage={errors.email?.message}
@@ -103,11 +103,11 @@ export default function LoginPage() {
               {...register('password', {
                 required: {
                   value: true,
-                  message: 'Password is required'
+                  message: 'Por favor ingrese su contraseña'
                 },
                 minLength: {
                   value: 8,
-                  message: 'Password must be at least 8 characters long'
+                  message: 'La contraseña debe tener al menos 8 caracteres'
                 }
               })}
               error={!!errors.password}
