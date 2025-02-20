@@ -29,8 +29,8 @@ function Intercambiar() {
   }
 
   return (
-    <div className="min-h-[calc(100vh_-_113px)] flex flex-col justify-between">
-      <div>
+    <div className="min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
+      <div className="max-h-[calc(100vh_-_150px_-_71px)] overflow-auto">
         <header className="mb-10">
           <h2>¿Qué deseas intercambiar?</h2>
         </header>
@@ -95,14 +95,14 @@ function Intercambiar() {
           </div>
         </div>
       </div>
-      <div className="flex">
-        <Button variant="outlined" className="w-[180px] mr-5">
+      <div className="flex pt-4">
+        <Button variant="outlined" className="max-w-[185px] mr-5">
           Atrás
         </Button>
         <Button
           disabled={fromAmount <= 0 || toAmount <= 0 || inputFromErrors.error}
           variant="gradiant"
-          className="w-[180px]"
+          className="max-w-[185px]"
           onClick={onSubmit}
         >
           Continuar

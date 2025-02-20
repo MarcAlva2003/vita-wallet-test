@@ -15,7 +15,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <div className="flex">
       <Sidebar navItems={navItems} />
-      <div className="w-full px-[50px] xl:px-[70px] pt-[80px] pb-[70px] 2xl:ml-[80px] max-w-[1100px]">{children}</div>
+      <div className='w-full max-w-[1200px]'>
+      <div className="w-full mx-[auto] px-[50px] xl:px-[70px] pt-[80px] pb-[70px] max-w-[1100px]">
+        {children}
+      </div>
+      </div>
       <ModalContainer isOpen={sessionExpired} onClose={logout}>
         <div className="min-h-5"></div>
       </ModalContainer>

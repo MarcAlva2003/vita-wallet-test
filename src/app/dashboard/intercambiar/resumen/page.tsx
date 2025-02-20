@@ -78,8 +78,8 @@ function ExchangeResume() {
   }, [])
 
   return (
-    <div className="min-h-[calc(100vh_-_113px)] flex flex-col justify-between">
-      <div>
+    <div className="min-h-[calc(100vh_-_150px)] flex flex-col justify-between">
+      <div className=''>
         <header className="mb-10 relative flex items-center mb-[90px]">
           <Link
             href={APP_ROUTES.EXCHANGE}
@@ -110,11 +110,11 @@ function ExchangeResume() {
           </div>
         </div>
       </div>
-      <div className="flex">
-        <Button onClick={goBack} variant="outlined" className="w-[180px] mr-5">
+      <div className="flex pt-4">
+        <Button onClick={goBack} variant="outlined" className="max-w-[185px] mr-5">
           Atrás
         </Button>
-        <Button disabled={isFetching} variant="gradiant" className="w-[180px]" onClick={onSubmit}>
+        <Button disabled={isFetching} variant="gradiant" className="max-w-[185px]" onClick={onSubmit}>
           {isFetching ? 'Actualizando...' : 'Intercambiar'}
         </Button>
       </div>
