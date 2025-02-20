@@ -23,7 +23,9 @@ function Home() {
   return (
     <div>
       <header className="flex items-center mb-[74px]">
-        <SimpleCoinIcon className="mr-3" />
+        <div className="mr-4">
+          <SimpleCoinIcon />
+        </div>
         {data.firstName.length ? (
           <h2 className="">
             ¡Hola{' '}
