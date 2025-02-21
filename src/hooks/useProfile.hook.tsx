@@ -29,20 +29,18 @@ export const useProfile = () => {
   })
 
   useEffect(() => {
-    if (isFetching || isLoading || sessionExpired) return;
+    if (isFetching || isLoading || sessionExpired) return
     setStatusCode(profileData?.statusCode ?? 0)
-    if (profileData?.statusCode === 401) {
+    if (profileData?.statusCode === 401 && statusCode !== 401) {
       onSessionExpired()
       console.log('HERE 2')
-    } else {
-      if (profileData?.data) {
-        setUserData({
-          balances: profileData?.data.data.attributes.balances,
-          firstName: profileData?.data.data.attributes.first_name,
-          lastName: profileData?.data.data.attributes.last_name,
-          email: profileData?.data.data.attributes.email
-        })
-      }
+    } else if (profileData?.data && profileData?.statusCode === 200) {
+      setUserData({
+        balances: profileData?.data.data.attributes.balances,
+        firstName: profileData?.data.data.attributes.first_name,
+        lastName: profileData?.data.data.attributes.last_name,
+        email: profileData?.data.data.attributes.email
+      })
     }
   }, [profileData, isFetching, isLoading, onSessionExpired, setUserData])
 
