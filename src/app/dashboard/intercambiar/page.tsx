@@ -30,6 +30,14 @@ function Intercambiar() {
     router.push(APP_ROUTES.EXCHANGE_RESUME)
   }
 
+  const bannedKeys = ['.', 'e', 'E', 'ArrowDown', 'ArrowUp', '-', '+']
+
+  const onKeyDown = (ev: React.KeyboardEvent) => {
+    if (bannedKeys.includes(ev.key)) {
+      ev.preventDefault()
+    }
+  }
+
   const statusLoading = useMemo(() => {
     return !fromBal.length || !toBal.length
   }, [fromBal, toBal])
@@ -86,6 +94,7 @@ function Intercambiar() {
                   }}
                   error={inputFromErrors.error}
                   errorMessage={inputFromErrors.message}
+                  onKeyDown={onKeyDown}
                 />
               )}
             </div>
@@ -115,6 +124,7 @@ function Intercambiar() {
                   onChange={(ev) => {
                     onPriceToChange(ev.target.value)
                   }}
+                  onKeyDown={onKeyDown}
                 />
               )}
             </div>
