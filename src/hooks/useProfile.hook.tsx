@@ -28,6 +28,8 @@ export const useProfile = () => {
 
   useEffect(() => {
     if (isFetching || isLoading) return;
+    console.log(profileData);
+    
     if (profileData?.statusCode === 401) {
       onSessionExpired()
       console.log('HERE 2');
