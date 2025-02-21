@@ -1,36 +1,180 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vita Wallet Frontend Test
 
-## Getting Started
+## Project Preview
 
-First, run the development server:
+This project is deployed on vercel. You can visit it clicking the following link:
+[https://vita-wallet-malvaa.vercel.app/](https://vita-wallet-malvaa.vercel.app/)
 
+### Or
+## Deploy in localhost
+
+Once you cloned this repository, install dependences using the command
+```
+yarn install
+```
+
+Then, run the development server:
 ```bash
 npm run dev
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project files structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+vita-wallet-test
+├─ eslint.config.mjs
+├─ next.config.ts
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.mjs
+├─ public
+│  ├─ file.svg
+│  ├─ globe.svg
+│  ├─ icons
+│  │  ├─ banknote.svg
+│  │  ├─ coin.svg
+│  │  ├─ coins.svg
+│  │  ├─ money-income.svg
+│  │  └─ ui
+│  │     ├─ arrow-left.svg
+│  │     ├─ bitcoin.svg
+│  │     ├─ calendar.svg
+│  │     ├─ check.svg
+│  │     ├─ chevron-down.svg
+│  │     ├─ chile.svg
+│  │     ├─ dollar-sign.svg
+│  │     ├─ eye-off.svg
+│  │     ├─ eye.svg
+│  │     ├─ filter.svg
+│  │     ├─ tether.svg
+│  │     ├─ upload.svg
+│  │     ├─ usdc.svg
+│  │     └─ x.svg
+│  ├─ next.svg
+│  ├─ vercel.svg
+│  └─ window.svg
+├─ README.md
+├─ src
+│  ├─ app
+│  │  ├─ app-layout-container.tsx
+│  │  ├─ auth
+│  │  │  ├─ login
+│  │  │  │  └─ page.tsx
+│  │  │  └─ register
+│  │  │     └─ page.tsx
+│  │  ├─ dashboard
+│  │  │  ├─ ayuda
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ inicio
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ intercambiar
+│  │  │  │  ├─ layout.tsx
+│  │  │  │  ├─ page.tsx
+│  │  │  │  └─ resumen
+│  │  │  │     └─ page.tsx
+│  │  │  ├─ layout.tsx
+│  │  │  ├─ perfil
+│  │  │  │  └─ page.tsx
+│  │  │  ├─ recargar
+│  │  │  │  └─ page.tsx
+│  │  │  └─ transferir
+│  │  │     └─ page.tsx
+│  │  ├─ favicon.ico
+│  │  ├─ globals.css
+│  │  ├─ layout.tsx
+│  │  └─ page.tsx
+│  ├─ assets
+│  │  └─ icons
+│  │     ├─ banknote-icon.tsx
+│  │     ├─ banknote.svg
+│  │     ├─ coin-icon.tsx
+│  │     ├─ coin.svg
+│  │     ├─ coins-icon.tsx
+│  │     ├─ coins.svg
+│  │     ├─ dollar-bg-icon.tsx
+│  │     ├─ dollar-bg.svg
+│  │     ├─ index.ts
+│  │     ├─ money-income-icon.tsx
+│  │     ├─ money-income.svg
+│  │     └─ ui
+│  │        ├─ arrow-left.svg
+│  │        ├─ bitcoin.svg
+│  │        ├─ calendar.svg
+│  │        ├─ check.svg
+│  │        ├─ chevron-down.svg
+│  │        ├─ chile.svg
+│  │        ├─ dollar-sign.svg
+│  │        ├─ eye-off.svg
+│  │        ├─ eye.svg
+│  │        ├─ filter.svg
+│  │        ├─ index.ts
+│  │        ├─ tether.svg
+│  │        ├─ ui-icons.tsx
+│  │        ├─ upload.svg
+│  │        ├─ usa.svg
+│  │        ├─ usdc.svg
+│  │        └─ x.svg
+│  ├─ components
+│  │  ├─ balance-card
+│  │  │  └─ balance-card.component.tsx
+│  │  ├─ history-row
+│  │  │  └─ history-row.component.tsx
+│  │  ├─ sidebar
+│  │  │  └─ sidebar.component.tsx
+│  │  ├─ transaction-item
+│  │  │  ├─ transaction-item.component.tsx
+│  │  │  └─ transaction-skeleton.component.tsx
+│  │  └─ UI
+│  │     ├─ button
+│  │     │  └─ button.component.tsx
+│  │     ├─ icon
+│  │     │  └─ icons.ts
+│  │     ├─ input
+│  │     │  └─ input.component.tsx
+│  │     ├─ modal
+│  │     │  ├─ modal.component.tsx
+│  │     │  └─ modal.styles.css
+│  │     ├─ select
+│  │     │  └─ button-drop.component.tsx
+│  │     └─ skeleton
+│  │        └─ skeleton.component.tsx
+│  ├─ constants
+│  │  ├─ app-routes.constant.ts
+│  │  ├─ nav-items.constant.tsx
+│  │  └─ regex-patterns.constant.ts
+│  ├─ context
+│  │  ├─ exchange-data.context.tsx
+│  │  ├─ session-expired.context.tsx
+│  │  └─ user-data.context.tsx
+│  ├─ HOC
+│  │  └─ isAuthenticated.hoc.tsx
+│  ├─ hooks
+│  │  ├─ useBalFormat.hook.tsx
+│  │  ├─ useExchange.hook.tsx
+│  │  ├─ useFormatText.hook.tsx
+│  │  ├─ useOutsideClick.hook.tsx
+│  │  ├─ usePriceshook.tsx
+│  │  ├─ useProfile.hook.tsx
+│  │  ├─ useTransactions.hook.tsx
+│  │  └─ useUserToken.hook.tsx
+│  ├─ interfaces
+│  │  ├─ balance.interfaces.ts
+│  │  ├─ icons.ts
+│  │  ├─ transactions.interfaces.ts
+│  │  └─ user-data.interfaces.ts
+│  └─ services
+│     ├─ auth.service.ts
+│     ├─ base-url.ts
+│     ├─ exchange.service.ts
+│     ├─ prices.service.ts
+│     ├─ profile.service.ts
+│     └─ transactions.service.ts
+├─ tailwind.config.ts
+├─ tsconfig.json
+└─ yarn.lock
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
