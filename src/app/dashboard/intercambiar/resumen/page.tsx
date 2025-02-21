@@ -48,8 +48,6 @@ function ExchangeResume() {
       }),
     onSuccess: (data) => {
       if (data?.statusCode === 401) {
-      console.log('HERE 2');   
-
         onSessionExpired()
       } else if (data?.statusCode === 201) {
         setSuccessModalOpen(true)
