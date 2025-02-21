@@ -26,7 +26,7 @@ export const usePrices = () => {
   })
 
   const getFromPrice = (fromBal: string, toBal: string, toAmount: number): number => {
-    if (prices) {
+    if (prices && fromBal.length && toBal.length) {
       const price: number = prices[toBal as string][fromBal as string]
       return price * toAmount
     }
@@ -34,7 +34,7 @@ export const usePrices = () => {
   }
 
   const getToPrice = (fromBal: string, toBal: string, fromAmount: number) => {
-    if (prices) {
+    if (prices && fromBal.length && toBal.length) {
       const price: number = prices[toBal as string][fromBal as string]
       setExchangeRate(price)
       return (fromAmount * 1) / price
@@ -52,6 +52,7 @@ export const usePrices = () => {
   useEffect(() => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
+      console.log('HERE');   
       onSessionExpired()
     } else {
       if (data?.data.prices) {

@@ -42,7 +42,7 @@ function Intercambiar() {
         </header>
         <div className="mb-12 flex">
           <p className="text-blue-2 font-semibold mr-1">Saldo disponible: </p>
-          {balanceCurrent.amount ? (
+          {balanceCurrent.label.length ? (
             <p className="text-blue-2 font-semibold">
               <button
                 onClick={() => {
