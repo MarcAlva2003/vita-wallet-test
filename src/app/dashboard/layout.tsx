@@ -14,7 +14,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const {} = useProfile()
   const [mobileModalOpen, setMobileModal] = useState<boolean>(false)
   const { logout } = useUserToken()
-  const { sessionExpired } = useSessionExpired()
+  const { sessionExpired, resetSessionExpired } = useSessionExpired()
+
+  const onConfirmationModalClose = () => {
+    resetSessionExpired()
+    logout()
+  }
 
   return (
     <div className="flex">
@@ -34,7 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       >
         {mobileModalOpen ? <MdClose size={30} /> : <IoMenu size={30} />}
       </button>
-      <ModalContainer isOpen={sessionExpired} onClose={logout}>
+      <ModalContainer isOpen={sessionExpired} onClose={onConfirmationModalClose}>
         <div className="min-h-5 px-5 py-4">
           <h2 className="text-center text-blue-2 mb-4">Su sesión ha expirado</h2>
           <p>Por favor, vuelva a iniciar sesión nuevamente</p>
