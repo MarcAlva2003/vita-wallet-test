@@ -29,6 +29,7 @@ export const useTransactions = () => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
       onSessionExpired()
+      console.log('HERE 1')
     } else {
       if (data?.data.data) {
         const transactions: ITransaction[] = data?.data.data
