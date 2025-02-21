@@ -21,7 +21,7 @@ export const useTransactions = () => {
         expiry: getExpiry() as string
       }),
     retry: false,
-    enabled: statusCode !== 200
+    enabled: statusCode !== 200 && !!getAccessToken()
   })
 
   useEffect(() => {
