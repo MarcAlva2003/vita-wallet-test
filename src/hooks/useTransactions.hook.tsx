@@ -25,6 +25,7 @@ export const useTransactions = () => {
   })
 
   useEffect(() => {
+    if (isFetching || isLoading) return;
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
       onSessionExpired()

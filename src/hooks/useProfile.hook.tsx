@@ -27,6 +27,7 @@ export const useProfile = () => {
   })
 
   useEffect(() => {
+    if (isFetching || isLoading) return;
     if (profileData?.statusCode === 401) {
       onSessionExpired()
     } else {
