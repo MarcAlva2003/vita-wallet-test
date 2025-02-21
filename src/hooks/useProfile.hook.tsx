@@ -9,7 +9,7 @@ import { useUserToken } from './useUserToken.hook'
 export const useProfile = () => {
   const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
   const [statusCode, setStatusCode] = useState<number>(0)
-  const { onSessionExpired } = useSessionExpired()
+  const { onSessionExpired, sessionExpired } = useSessionExpired()
   const { setUserData } = useUserDataContext()
   const {
     data: profileData,
@@ -29,7 +29,7 @@ export const useProfile = () => {
   })
 
   useEffect(() => {
-    if (isFetching || isLoading) return;
+    if (isFetching || isLoading || sessionExpired) return;
     console.log(profileData);
     setStatusCode(profileData?.statusCode ?? 0)
     if (profileData?.statusCode === 401 && statusCode !== 401) {

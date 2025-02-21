@@ -9,7 +9,7 @@ import { useUserToken } from './useUserToken.hook'
 export const useTransactions = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([])
   const [statusCode, setStatusCode] = useState<number>(0)
-  const { onSessionExpired } = useSessionExpired()
+  const { onSessionExpired, sessionExpired } = useSessionExpired()
   const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ['getTransactions'],
@@ -25,7 +25,7 @@ export const useTransactions = () => {
   })
 
   useEffect(() => {
-    if (isFetching || isLoading) return;
+    if (isFetching || isLoading || sessionExpired) return;
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
       onSessionExpired()
