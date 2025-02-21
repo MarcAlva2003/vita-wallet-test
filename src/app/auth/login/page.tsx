@@ -33,7 +33,8 @@ export default function LoginPage() {
     trigger,
     formState: { errors },
     clearErrors,
-    getValues
+    getValues,
+    setValue
   } = useForm<Inputs>()
 
   const { mutate, isPending } = useMutation({
@@ -47,6 +48,7 @@ export default function LoginPage() {
           expiry: data.expiry,
           uid: data.uid
         })
+
         setUserData({
           balances: data.data?.attributes?.balances,
           firstName: data.data?.attributes.first_name,
@@ -69,7 +71,6 @@ export default function LoginPage() {
   if (getAccessToken()) {
     push(APP_ROUTES.HOME)
   }
-
   return (
     <div className="flex items-center lg:px-[60px] md:bg-white lg:bg-[#FFFFFF] md:p-10 xl:px-[120px] xl:pb-[100px] lg:pt-[120px] w-full h-screen max-w-[1440px] m-[0_auto] lg:grid grid-cols-[2fr_3fr] xl:grid-cols-[2fr_4fr] relative">
       <div className="w-full px-[30px] max-w-[420px] md:shadow-xl md:rounded-[12px] md:mx-[auto] h-full md:h-fit lg:shadow-[none] lg:h-full flex flex-col py-[50px] lg:px-0 lg:pt-0 justify-center lg:justify-between">
@@ -91,6 +92,7 @@ export default function LoginPage() {
             onChange={(ev) => {
               clearErrors('email')
               setEmailCheck(ev.target.value)
+              setValue('email', ev.target.value)
             }}
           />
           <div className="mb-10 lg:mb-[80px]">
@@ -111,8 +113,9 @@ export default function LoginPage() {
               })}
               error={!!errors.password}
               errorMessage={errors.password?.message}
-              onChange={() => {
+              onChange={(ev) => {
                 clearErrors('password')
+                setValue('password', ev.target.value)
               }}
               iconRight={
                 <button
