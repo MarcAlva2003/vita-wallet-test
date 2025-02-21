@@ -52,6 +52,7 @@ export const usePrices = () => {
   useEffect(() => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
+      console.log('HERE');   
       onSessionExpired()
     } else {
       if (data?.data.prices) {
