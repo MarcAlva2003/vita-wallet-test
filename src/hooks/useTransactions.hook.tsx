@@ -29,11 +29,9 @@ export const useTransactions = () => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
       onSessionExpired()
-    } else {
-      if (data?.data.data) {
-        const transactions: ITransaction[] = data?.data.data
-        setTransactions(transactions)
-      }
+    } else if (data?.data.data && data?.statusCode === 200) {
+      const transactions: ITransaction[] = data?.data.data
+      setTransactions(transactions)
     }
   }, [data, isFetching, isLoading, onSessionExpired])
 
