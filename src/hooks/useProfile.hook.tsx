@@ -33,7 +33,6 @@ export const useProfile = () => {
     setStatusCode(profileData?.statusCode ?? 0)
     if (profileData?.statusCode === 401 && statusCode !== 401) {
       onSessionExpired()
-      console.log('HERE 2')
     } else if (profileData?.data && profileData?.statusCode === 200) {
       setUserData({
         balances: profileData?.data.data.attributes.balances,
