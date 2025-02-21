@@ -36,7 +36,7 @@ export const useProfile = () => {
       onSessionExpired()
       console.log('HERE 2');
     } else {
-      if (profileData?.data) {
+      if (profileData?.data && profileData?.statusCode === 200) {
         setUserData({
           balances: profileData?.data.data.attributes.balances,
           firstName: profileData?.data.data.attributes.first_name,
