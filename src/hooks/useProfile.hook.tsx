@@ -30,6 +30,7 @@ export const useProfile = () => {
     if (isFetching || isLoading) return;
     if (profileData?.statusCode === 401) {
       onSessionExpired()
+      console.log('HERE 2');
     } else {
       if (profileData?.data) {
         setUserData({
