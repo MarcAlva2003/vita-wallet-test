@@ -27,7 +27,6 @@ export const useTransactions = () => {
   useEffect(() => {
     setStatusCode(data?.statusCode as number)
     if (data?.statusCode === 401) {
-      console.log('HERE 4');   
       onSessionExpired()
     } else {
       if (data?.data.data) {

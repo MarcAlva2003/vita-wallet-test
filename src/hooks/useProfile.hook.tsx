@@ -28,7 +28,6 @@ export const useProfile = () => {
 
   useEffect(() => {
     if (profileData?.statusCode === 401) {
-        console.log('HERE 3');   
       onSessionExpired()
     } else {
       if (profileData?.data) {
