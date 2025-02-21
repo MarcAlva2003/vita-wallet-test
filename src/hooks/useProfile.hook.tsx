@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
-
 import { getProfile } from '@/services/profile.service'
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSessionExpired } from '@/context/session-expired.context'
 import { useUserDataContext } from '@/context/user-data.context'
@@ -8,7 +7,6 @@ import { useUserToken } from './useUserToken.hook'
 
 export const useProfile = () => {
   const { getAccessToken, getUserId, getClient, getExpiry } = useUserToken()
-  const [statusCode, setStatusCode] = useState<number>(0)
   const { onSessionExpired, sessionExpired } = useSessionExpired()
   const { setUserData } = useUserDataContext()
   const {
@@ -25,18 +23,15 @@ export const useProfile = () => {
         expiry: getExpiry() as string
       }),
     retry: false,
-    enabled: !!getAccessToken() && statusCode !== 401
+    enabled: !!getAccessToken()
   })
 
   useEffect(() => {
     if (isFetching || isLoading || sessionExpired) return;
-    console.log(profileData);
-    setStatusCode(profileData?.statusCode ?? 0)
-    if (profileData?.statusCode === 401 && statusCode !== 401) {
+    if (profileData?.statusCode === 401) {
       onSessionExpired()
-      console.log('HERE 2');
     } else {
-      if (profileData?.data && profileData?.statusCode === 200) {
+      if (profileData?.data) {
         setUserData({
           balances: profileData?.data.data.attributes.balances,
           firstName: profileData?.data.data.attributes.first_name,
