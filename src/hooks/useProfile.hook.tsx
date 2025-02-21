@@ -22,7 +22,8 @@ export const useProfile = () => {
         client: getClient() as string,
         expiry: getExpiry() as string
       }),
-    retry: false
+    retry: false,
+    enabled: !!getAccessToken()
   })
 
   useEffect(() => {
